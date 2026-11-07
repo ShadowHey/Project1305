@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>mCase Workbench - HiLabs APM Case</title>
+<style>
+@font-face{font-family:Nunito;font-weight:400;font-style:normal;src:url(https://cdn.jsdelivr.net/npm/@fontsource/nunito@5.0.0/files/nunito-latin-400-normal.woff2) format('woff2');}
+@font-face{font-family:Nunito;font-weight:600;font-style:normal;src:url(https://cdn.jsdelivr.net/npm/@fontsource/nunito@5.0.0/files/nunito-latin-600-normal.woff2) format('woff2');}
+@font-face{font-family:Nunito;font-weight:700;font-style:normal;src:url(https://cdn.jsdelivr.net/npm/@fontsource/nunito@5.0.0/files/nunito-latin-700-normal.woff2) format('woff2');}
+@font-face{font-family:Nunito;font-weight:800;font-style:normal;src:url(https://cdn.jsdelivr.net/npm/@fontsource/nunito@5.0.0/files/nunito-latin-800-normal.woff2) format('woff2');}
+@font-face{font-family:Nunito;font-weight:400;font-style:italic;src:url(https://cdn.jsdelivr.net/npm/@fontsource/nunito@5.0.0/files/nunito-latin-400-italic.woff2) format('woff2');}
+@page{size:1600px 900px;margin:0}
+:root{--navy:#0A2A73;--blue:#2B6CF0;--p1:#EAF1FE;--p2:#D6E4FC;--p3:#A9C1EC;--ink:#16213A;--mut:#4C5A75;--red:#A82A22;--rt:#F9E3E1;--rb:#E3A29C;--amb:#7A4F00;--at:#FBEFD2;--ab:#E2BE6A;--grn:#14693A;--gt:#DDF3E4;--gb:#8ACDA3;--gry:#3F4754;--gyt:#E6E9EE}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1600px;background:#F7F7F7;font-family:Nunito;font-size:13.5px;line-height:1.3;color:var(--ink);font-weight:400;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+b,strong{font-weight:700}
+a{color:var(--navy)}
+section{position:relative;width:1600px;height:900px;overflow:hidden;background:#F7F7F7;page-break-after:always;break-after:page}
+section:last-of-type{page-break-after:auto;break-after:auto}
+.tabs{position:absolute;left:0;top:0;width:1600px;height:38px;display:flex;border-bottom:1.5px solid #D3DCEB}
+.tabs div{flex:1;text-align:center;line-height:37px;font-weight:700;font-size:15.5px;color:var(--blue)}
+.tabs div.on{background:var(--blue);color:#fff}
+.ttl{position:absolute;left:24px;right:24px;top:45px;font-size:23px;font-weight:800;color:var(--navy);line-height:1.2}
+.src{position:absolute;left:24px;bottom:7px;width:1490px;font-size:11.5px;line-height:1.25;color:var(--navy)}
+.src a{margin-right:5px}
+.pg{position:absolute;right:24px;bottom:7px;font-size:11.5px;line-height:1.25;color:var(--mut);font-weight:700}
+.col{position:absolute;top:82px;bottom:30px;display:flex;flex-direction:column;gap:9px}
+.hd{display:inline-block;align-self:flex-start;background:var(--navy);color:#fff;font-weight:800;font-size:15.5px;line-height:1.2;padding:6px 14px}
+.hd2{display:block;background:var(--blue);color:#fff;font-weight:700;font-size:14px;line-height:1.2;padding:4px 10px;align-self:flex-start}
+.sub{font-size:15px;font-weight:800;color:var(--blue);line-height:1.2}
+.blu{color:var(--blue);font-weight:700}
+.nv{color:var(--navy);font-weight:700}
+.rd{color:var(--red);font-weight:700}
+.dash{border:1.5px dashed var(--navy);border-radius:8px;padding:8px 11px;background:#fff}
+.card{background:#fff;border:1px solid var(--p3);border-radius:8px;padding:8px 11px}
+.pale{background:var(--p1);border:1px solid var(--p3);border-radius:8px;padding:8px 11px}
+.navyb{background:var(--navy);color:#fff;border-radius:8px;padding:9px 13px}
+.navyb b{font-weight:800}
+.num{font-weight:800;color:var(--navy);line-height:1.05}
+.t{display:inline-block;font-size:11.5px;line-height:15px;font-weight:700;padding:0 6px;border-radius:8px;white-space:nowrap;vertical-align:1px}
+.t-r{background:var(--navy);color:#fff;border:1px solid var(--navy)}
+.t-m{background:var(--blue);color:#fff;border:1px solid var(--blue)}
+.t-p{background:var(--p2);color:var(--navy);border:1px solid var(--p3)}
+.t-v{background:var(--at);color:var(--amb);border:1px solid var(--ab)}
+.t-e{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.c{display:inline-block;font-size:11.5px;line-height:15px;font-weight:700;padding:1px 7px;border-radius:9px;white-space:nowrap}
+.c-f{background:var(--gt);color:var(--grn);border:1px solid var(--gb)}
+.c-a{background:var(--at);color:var(--amb);border:1px solid var(--ab)}
+.c-s{background:var(--rt);color:var(--red);border:1px solid var(--rb)}
+.c-n{background:var(--gyt);color:var(--gry);border:1px dashed var(--gry)}
+.ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-4px}
+.ar{width:15px;height:10px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:0;margin:0 2px;color:var(--blue)}
+.tb{width:100%;border-collapse:collapse;background:#fff}
+.tb th{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;line-height:1.2;text-align:left;padding:5px 7px;vertical-align:middle}
+.tb td{font-size:12.5px;line-height:1.24;padding:4px 7px;border-bottom:1px solid #D6E0F0;vertical-align:top}
+.tb td b{color:var(--navy)}
+.tb.big td{font-size:13.5px}
+.ctr{text-align:center}.tr{text-align:right}
+ul.u{list-style:none}
+ul.u li{position:relative;padding-left:12px}
+ul.u li i{position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--blue)}
+.dot{display:inline-block;border-radius:50%}
+.g{display:grid}
+.f{display:flex}
+.grow{flex:1}
+.n{display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:800;line-height:18px;text-align:center;border:1px solid #fff;flex:none}
+.note{background:#fff;border:1px solid var(--navy);border-radius:7px;padding:6px 9px;font-size:13.5px;line-height:1.26;position:absolute}
+.note .n{float:left;margin:0 6px 0 0}
+svg.links{position:absolute;left:0;top:0;width:1600px;height:900px;fill:none;stroke:var(--blue);stroke-width:1.2}
+svg.links circle{fill:var(--blue);stroke:none}
+/* wireframes */
+.lap{position:absolute;background:#1E2534;padding:9px 9px 11px;border-radius:12px 12px 0 0}
+.base{position:absolute;height:12px;background:#AAB2C2;border-radius:0 0 12px 12px}
+.base div{width:110px;height:5px;margin:0 auto;background:#7E889B;border-radius:0 0 6px 6px}
+.scr{background:#fff;font-size:12px;line-height:1.25;position:relative;color:var(--ink)}
+.appb{display:flex;align-items:center;height:30px;padding:0 12px;border-bottom:1.5px solid var(--blue);gap:14px;background:#fff;font-size:12px}
+.appb .wm{font-size:17px;font-weight:800;color:#111}
+.appb .wm span{color:var(--blue)}
+.appb .tab{font-weight:700;color:var(--mut)}
+.appb .tab.on{color:var(--blue)}
+.wt{width:100%;border-collapse:collapse}
+.wt th{font-size:11.5px;font-weight:700;color:var(--navy);background:var(--p1);text-align:left;padding:4px 7px;line-height:1.2;position:relative;border-bottom:1px solid var(--p3)}
+.wt td{font-size:12px;line-height:1.24;padding:4px 7px;border-bottom:1px solid #DFE6F2;vertical-align:top}
+.wt td b{color:var(--navy)}
+.btn{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:12px;border-radius:5px;padding:3px 10px;line-height:1.3}
+.btn.g2{background:#fff;color:var(--blue);border:1px solid var(--blue);padding:2px 9px}
+.box{display:inline-block;width:12px;height:12px;border:1.3px solid var(--navy);border-radius:2px;background:#fff;vertical-align:-2px}
+.pnl{border:1px solid var(--p3);border-radius:6px;background:#fff;padding:6px 8px;position:relative}
+.pt{font-size:12.5px;font-weight:800;color:var(--navy);line-height:1.2}
+.chrome{display:flex;align-items:center;gap:6px;height:24px;padding:0 9px;background:#E3E8F1;border-radius:9px 9px 0 0;border-bottom:1px solid #C6CFDE}
+.chrome span.d{width:9px;height:9px;border-radius:50%;background:#AEB7C7}
+.chrome div{flex:1;height:15px;border-radius:7px;background:#fff;font-size:11.5px;line-height:15px;padding-left:9px;color:var(--mut)}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+<symbol id="ar" viewBox="0 0 15 10"><path d="M1 5h12M9 1l4 4-4 4"/></symbol>
+<symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+<symbol id="users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.8 2.9-6 6.500-6s6.500 2.200 6.500 6"/><path d="M16 5a3.500 3.500 0 0 1 0 6.500M18 14.300c2.200.7 3.500 2.700 3.500 5.700"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.500 2"/></symbol>
+<symbol id="phone" viewBox="0 0 24 24"><path d="M5 3h4l2 5-2.500 1.500a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2C10.700 21 3 13.300 3 5a2 2 0 0 1 2-2z"/></symbol>
+<symbol id="doc" viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6z"/><path d="M15 2v4h4M9 11h7M9 15h7M9 19h4"/></symbol>
+<symbol id="db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.700 3.600 3 8 3s8-1.300 8-3V5M4 12c0 1.700 3.600 3 8 3s8-1.300 8-3"/></symbol>
+<symbol id="shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.400 9-8 11-4.600-2-8-6-8-11V5z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="M4 13l5 5L20 6"/></symbol>
+<symbol id="alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.500"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 17v-5M12 17V8M17 17v-8"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+<symbol id="link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></symbol>
+<symbol id="pill" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="4"/><path d="M12 8v8"/></symbol>
+<symbol id="home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v11h14V10M10 21v-6h4v6"/></symbol>
+<symbol id="bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4z"/><path d="M10 22h4"/></symbol>
+<symbol id="pen" viewBox="0 0 24 24"><path d="M4 20l1-5L16 4l4 4L9 19z"/><path d="M14 6l4 4"/></symbol>
+<symbol id="flag" viewBox="0 0 24 24"><path d="M5 22V3M5 4h13l-3 4.500L18 13H5"/></symbol>
+<symbol id="dollar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9c-.5-1.300-1.700-2-3-2-1.800 0-3 1-3 2.500S10.500 12 12 12s3 .9 3 2.500-1.200 2.500-3 2.500c-1.300 0-2.500-.7-3-2M12 5.500v13"/></symbol>
+<symbol id="drag" viewBox="0 0 24 24"><path d="M8 6v.100M8 12v.100M8 18v.100M16 6v.100M16 12v.100M16 18v.100" stroke-width="3"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></symbol>
+</svg>
+
+<!-- =============== 1 TITLE =============== -->
+<section class="s1" style="background:#fff">
+<div style="position:absolute;left:0;top:0;width:1600px;height:24px;background:var(--blue)"></div>
+<div style="position:absolute;left:44px;top:42px;width:1040px;display:flex;align-items:center;gap:22px">
+  <div style="font-size:60px;font-weight:800;line-height:1;color:#111"><span style="color:var(--blue)">Hi</span>Labs</div>
+  <div style="width:2px;height:58px;background:var(--p3)"></div>
+  <div><div style="font-size:33px;font-weight:800;color:var(--navy);line-height:1.1">mCase Workbench</div><div style="font-size:18.5px;font-weight:600;color:var(--blue);line-height:1.25">Give Maria back her judgment.</div></div>
+</div>
+<div style="position:absolute;left:44px;top:122px;width:1040px;font-size:21px;font-weight:800;color:var(--navy)">Problem Statement</div>
+<div style="position:absolute;left:44px;top:152px;width:1040px;border:2px solid var(--navy);border-radius:10px;padding:10px 16px;font-size:15.5px;font-weight:600;color:var(--navy);line-height:1.34">Design a Case Management Workbench MVP (web) for a health plan that <span class="blu">(a) assembles a timely, trustworthy, holistic picture</span> of each member; <span class="blu">(b) tells the case manager whom to work on and what to do next</span>; and <span class="blu">(c) cuts documentation and outreach friction</span>, so clinicians spend their time on judgment and conversations, not data hunting.</div>
+<div class="hd" style="position:absolute;left:44px;top:268px;font-size:17px">The answer in 30 seconds</div>
+<div style="position:absolute;left:44px;top:308px;width:1040px;display:flex;flex-direction:column;gap:7px">
+ <div class="g" style="grid-template-columns:150px 1fr 150px;height:80px;border:1px solid var(--p3);background:#F7FAFF"><div class="f" style="background:var(--blue);color:#fff;font-weight:800;font-size:15.5px;align-items:center;gap:8px;padding-left:12px"><svg class="ic" style="width:20px;height:20px"><use href="#chart"/></svg>Understand</div><div style="font-size:15.5px;padding:0 14px;align-self:center;line-height:1.28">~49% of Maria's day goes to <span class="blu">chart assembly and documentation</span>; 12.5% to real conversations (our estimate, assumptions shown).</div><div class="num ctr" style="font-size:30px;align-self:center;border-left:1.5px dashed var(--p3);line-height:68px">~49%</div></div>
+ <div class="g" style="grid-template-columns:150px 1fr 150px;height:80px;border:1px solid var(--p3);background:#F7FAFF"><div class="f" style="background:var(--blue);color:#fff;font-weight:800;font-size:15.5px;align-items:center;gap:8px;padding-left:12px"><svg class="ic" style="width:20px;height:20px"><use href="#db"/></svg>Data</div><div style="font-size:15.5px;padding:0 14px;align-self:center;line-height:1.28">20 datasets, 12 in MVP, <span class="blu">each tied to a decision</span>; every field shows age and source.</div><div class="num ctr" style="font-size:30px;align-self:center;border-left:1.5px dashed var(--p3);line-height:68px">12 of 20</div></div>
+ <div class="g" style="grid-template-columns:150px 1fr 150px;height:80px;border:1px solid var(--p3);background:#F7FAFF"><div class="f" style="background:var(--blue);color:#fff;font-weight:800;font-size:15.5px;align-items:center;gap:8px;padding-left:12px"><svg class="ic" style="width:20px;height:20px"><use href="#users"/></svg>Patients</div><div style="font-size:15.5px;padding:0 14px;align-self:center;line-height:1.28">5 fictional members with <span class="blu">25 planted imperfections</span> (see annex).</div><div class="num ctr" style="font-size:30px;align-self:center;border-left:1.5px dashed var(--p3);line-height:68px">5 and 25</div></div>
+ <div class="g" style="grid-template-columns:150px 1fr 150px;height:80px;border:1px solid var(--p3);background:#F7FAFF"><div class="f" style="background:var(--blue);color:#fff;font-weight:800;font-size:15.5px;align-items:center;gap:8px;padding-left:12px"><svg class="ic" style="width:20px;height:20px"><use href="#grid"/></svg>Product</div><div style="font-size:15.5px;padding:0 14px;align-self:center;line-height:1.28">Queue, Member 360, Outreach &amp; Docs. <span class="blu">AI drafts; a clinician confirms.</span></div><div class="num ctr" style="font-size:30px;align-self:center;border-left:1.5px dashed var(--p3);line-height:68px">3 screens</div></div>
+ <div class="g" style="grid-template-columns:150px 1fr 150px;height:80px;border:1px solid var(--p3);background:#F7FAFF"><div class="f" style="background:var(--blue);color:#fff;font-weight:800;font-size:15.5px;align-items:center;gap:8px;padding-left:12px"><svg class="ic" style="width:20px;height:20px"><use href="#target"/></svg>Measure</div><div style="font-size:15.5px;padding:0 14px;align-self:center;line-height:1.28"><span class="blu">Conversations per day 3 to 5.</span> 90-day controlled pilot. We do not promise readmission cuts.</div><div class="num ctr" style="font-size:30px;align-self:center;border-left:1.5px dashed var(--p3);line-height:68px">3 to 5</div></div>
+</div>
+<div style="position:absolute;left:44px;top:754px;width:1040px;display:flex;gap:20px;align-items:stretch">
+ <div style="flex:1;font-size:18px;font-weight:700;color:var(--navy);line-height:1.38;padding-top:6px"><div style="font-weight:800;font-size:21px">Aditya Acharya</div><div>IIT (BHU) Varanasi</div><div style="font-size:16px"><a href="mailto:aditya.acharya.bme23@itbhu.ac.in">aditya.acharya.bme23@itbhu.ac.in</a></div></div>
+ <div class="dash" style="width:460px;font-size:14.5px;line-height:1.35;align-self:center"><b class="nv">Annex:</b> mCase_Synthetic_Patients_Annex.xlsx<br>All members in this deck are fictional; IDs start SYN-, phones use reserved 555-01xx. "Today" in the case is Monday 9 Nov 2026, 08:00.</div>
+</div>
+<svg style="position:absolute;left:1090px;top:24px" width="510" height="876" viewBox="0 0 510 876">
+ <path d="M96 176C76 72 206 14 306 44c112 34 186 116 160 240-20 96 44 192 18 310-22 104-40 200-96 282H54C10 790 8 694 44 604c34-90 66-290 52-428z" fill="#2B6CF0"/>
+ <path d="M70 176C50 56 200-8 318 28c120 36 198 124 172 256" fill="none" stroke="#A9C1EC" stroke-width="3"/>
+ <path d="M26 620C4 700 14 800 44 876" fill="none" stroke="#A9C1EC" stroke-width="3"/>
+ <path d="M372 510c44-30 112-14 128 40 14 50-6 120-44 150-34 28-76 22-96-12-26-44-30-140 12-178z" fill="#0A2A73"/>
+ <g fill="#0A2A73"><circle cx="22" cy="330" r="4.500"/><circle cx="46" cy="330" r="4.500"/><circle cx="70" cy="330" r="4.500"/><circle cx="94" cy="330" r="4.500"/><circle cx="34" cy="352" r="4.500"/><circle cx="58" cy="352" r="4.500"/><circle cx="82" cy="352" r="4.500"/><circle cx="106" cy="352" r="4.500"/></g>
+ <g fill="#0A2A73"><circle cx="398" cy="330" r="4.500"/><circle cx="422" cy="330" r="4.500"/><circle cx="446" cy="330" r="4.500"/><circle cx="470" cy="330" r="4.500"/><circle cx="410" cy="352" r="4.500"/><circle cx="434" cy="352" r="4.500"/><circle cx="458" cy="352" r="4.500"/><circle cx="482" cy="352" r="4.500"/></g>
+ <!-- bun and back hair -->
+ <g transform="translate(0,58)"><circle cx="262" cy="108" r="34" fill="#141B33"/>
+ <path d="M178 228c-8-84 38-116 86-116s92 34 86 116c-2 34-8 62-20 84l-132 0c-12-22-18-50-20-84z" fill="#141B33"/></g>
+ <!-- neck -->
+ <path d="M232 340h64v80l-32 44-32-44z" fill="#EDB891"/>
+ <!-- torso scrubs -->
+ <path d="M84 876c-2-150 8-300 44-388 12-30 52-52 104-74l32 44 32-44c52 22 92 44 104 74 36 88 44 238 44 388z" fill="#fff"/>
+ <path d="M232 414l32 44 32-44 14 6-46 74-46-74z" fill="#0A2A73"/>
+ <path d="M218 420l46 74 46-74 18 8-64 110-64-110z" fill="#D6E4FC"/>
+ <path d="M264 538v338" stroke="#D6E4FC" stroke-width="3" fill="none"/>
+ <!-- pockets -->
+ <rect x="130" y="664" width="92" height="74" rx="6" fill="#EAF1FE" stroke="#A9C1EC" stroke-width="2"/>
+ <!-- face -->
+ <g transform="translate(0,58)"><ellipse cx="264" cy="222" rx="72" ry="88" fill="#F6CBA8"/>
+ <path d="M190 214c6-56 44-82 78-80 36 2 70 26 74 80-22-8-44-30-58-50-20 28-56 46-94 50z" fill="#141B33"/>
+ <circle cx="236" cy="232" r="5.500" fill="#141B33"/><circle cx="292" cy="232" r="5.500" fill="#141B33"/>
+ <path d="M222 214c8-5 18-5 26-1M280 213c8-4 18-4 26 1" stroke="#141B33" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <path d="M266 238c-3 12-6 20-3 24 2 2 6 2 9 1" stroke="#C98F68" stroke-width="2.500" fill="none" stroke-linecap="round"/>
+ <path d="M240 278c14 12 36 12 50-1" stroke="#A84F3C" stroke-width="3.500" fill="none" stroke-linecap="round"/>
+ <!-- headset -->
+ <path d="M186 226c-8-82 36-122 78-122s86 40 78 122" fill="none" stroke="#0A2A73" stroke-width="9" stroke-linecap="round"/>
+ <rect x="172" y="212" width="24" height="46" rx="11" fill="#0A2A73"/><rect x="332" y="212" width="24" height="46" rx="11" fill="#0A2A73"/>
+ <path d="M184 256c0 34 18 48 48 48" fill="none" stroke="#0A2A73" stroke-width="5" stroke-linecap="round"/>
+ <rect x="226" y="296" width="24" height="13" rx="6.500" fill="#2B6CF0"/></g>
+ <!-- stethoscope -->
+ <path d="M186 442c-22 60-24 130 8 168M342 442c24 62 22 118-4 166" fill="none" stroke="#141B33" stroke-width="5" stroke-linecap="round"/>
+ <path d="M194 610c8 46 50 46 54 0" fill="none" stroke="#141B33" stroke-width="5"/>
+ <circle cx="338" cy="618" r="11" fill="#141B33"/><circle cx="338" cy="618" r="4.500" fill="#A9C1EC"/>
+ <!-- clipboard + arm -->
+ <path d="M418 500c28 70 46 160 46 248-40 26-78 30-108 20-2-70-14-140-36-196z" fill="#fff"/>
+ <rect x="270" y="628" width="172" height="222" rx="10" fill="#0A2A73"/>
+ <rect x="282" y="646" width="148" height="192" rx="4" fill="#fff"/>
+ <rect x="326" y="618" width="60" height="24" rx="6" fill="#2B6CF0"/>
+ <g stroke="#2B6CF0" stroke-width="4" fill="none" stroke-linecap="round"><path d="M296 672l7 7 12-14M296 712l7 7 12-14M296 752l7 7 12-14"/></g>
+ <g stroke="#A9C1EC" stroke-width="5" stroke-linecap="round"><path d="M328 674h86M328 714h86M328 754h60M296 796h118"/></g>
+ <path d="M396 770c20-14 52-18 66-16 10 16 4 40-14 52-20 10-44 6-58-6-6-12-2-24 6-30z" fill="#F6CBA8"/>
+</svg>
+</section>
+
+<!-- =============== 2 =============== -->
+<section class="s2">
+<div class="tabs"><div class="on">Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Maria's problem is not effort; it is that her best hours go to assembling the member, not caring for them.</div>
+
+<div class="col" style="left:24px;width:440px">
+ <div class="hd">Personas (case managers only)</div>
+ <div class="card grow" style="border:1.5px solid var(--blue);background:#F7FAFF">
+  <div class="f" style="gap:9px;align-items:center;margin-bottom:5px"><div style="width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center"><svg class="ic" style="width:22px;height:22px"><use href="#user"/></svg></div><div class="sub" style="font-size:16px">Maria Alvarez, RN, CCM <span class="t t-m">Primary</span></div></div>
+  <div style="margin-bottom:3px">Complex case management, MA plan. <b>20 yrs ICU, 48 active cases.</b></div>
+  <div style="margin-bottom:3px"><span class="blu">Goal:</span> spend her day on people who need her clinical judgment.</div>
+  <div style="margin-bottom:3px"><span class="rd">Bad day:</span> 2 real conversations by 3 pm.</div>
+  <div><span class="blu">Wants:</span> <i>"Tell me who, tell me why, and let me trust it."</i></div><div style="margin-top:3px"><span class="blu">With mCase:</span> sees the med conflict at 8:06, before the first call.</div>
+ </div>
+ <div class="card grow">
+  <div class="f" style="gap:9px;align-items:center;margin-bottom:5px"><div style="width:36px;height:36px;border-radius:50%;background:var(--p2);color:var(--navy);display:flex;align-items:center;justify-content:center"><svg class="ic" style="width:22px;height:22px"><use href="#clock"/></svg></div><div class="sub" style="font-size:16px">Jordan Lee, RN (transitions of care)</div></div>
+  <div style="margin-bottom:3px"><b>~70 discharges a month</b>, not a static panel <span class="t t-e">Our estimate</span> (see caseload check).</div>
+  <div style="margin-bottom:3px">Lives on clocks: contact within ~2 business days, visit within 7.</div>
+  <div><span class="blu">Wants:</span> never to miss a discharge because an alert said only "admitted".</div><div style="margin-top:3px"><span class="blu">With mCase:</span> a discharge list sorted by clock; "not received" becomes a task.</div>
+ </div>
+ <div class="card grow">
+  <div class="f" style="gap:9px;align-items:center;margin-bottom:5px"><div style="width:36px;height:36px;border-radius:50%;background:var(--p2);color:var(--navy);display:flex;align-items:center;justify-content:center"><svg class="ic" style="width:22px;height:22px"><use href="#home"/></svg></div><div class="sub" style="font-size:16px">Sam Whitaker, LCSW (BH, social needs)</div></div>
+  <div style="margin-bottom:3px">Lower caseload, higher complexity. Works housing, shelters, crisis plans. <b>Needs consent-aware views.</b></div>
+  <div><span class="blu">Wants:</span> to see social context that is current, not 8 months old.</div><div style="margin-top:3px"><span class="blu">With mCase:</span> dated social fields, routed cases and a consent banner that reveals no content.</div>
+ </div>
+ <div class="dash" style="padding:7px 10px"><div style="font-weight:700;color:var(--navy);margin-bottom:4px">Evidence grades used on every stat</div><div style="line-height:1.55"><span class="t t-r">Rule</span> <span class="t t-m">Measured</span> <span class="t t-p">Proxy</span> <span class="t t-v">Vendor</span> <span class="t t-e">Our estimate</span></div></div>
+</div>
+
+<div class="col" style="left:476px;width:476px">
+ <div class="hd">Monday in Maria's life</div>
+ <div style="position:relative;flex:1;display:flex;flex-direction:column;gap:5px" id="s2tl">
+  <div style="position:absolute;left:61px;top:10px;bottom:10px;width:2px;background:var(--navy)"></div>
+  <div class="f tlr"><div class="tm">08:00</div><div class="tdot"></div><div class="tx"><div>Six discharge alerts since Friday; no signal for who is first; opens her side spreadsheet.</div></div></div>
+  <div class="f tlr"><div class="tm">08:30</div><div class="tdot"></div><div class="tx"><div><b class="nv">First member: 6-7 screens</b> (claims portal, auth system, pharmacy file, HIE portal, old notes, spreadsheet).</div></div></div>
+  <div class="f tlr"><div class="tm">09:15</div><div class="tdot"></div><div class="tx"><div>Latest claim is 45 days old; alert says "admitted" but not why; two systems disagree on meds.</div></div></div>
+  <div class="f tlr"><div class="tm">10:30</div><div class="tdot"></div><div class="tx"><div>Dials: phone disconnected; voicemail; voicemail. Hunts a new number.</div></div></div>
+  <div class="f tlr j"><div class="tm">11:30</div><div class="tdot"></div><div class="tx"><div><b class="blu">First real conversation.</b> She notices a med list does not add up. <b class="nv">This is what she is for.</b></div></div></div>
+  <div class="f tlr"><div class="tm">13:00</div><div class="tdot"></div><div class="tx"><div>40-field assessment before she can close the contact.</div></div></div>
+  <div class="f tlr j"><div class="tm">15:00</div><div class="tdot"></div><div class="tx"><div><b class="blu">Second conversation done.</b> Two so far.</div></div></div>
+  <div class="f tlr"><div class="tm">17:30</div><div class="tdot"></div><div class="tx"><div>Notes done after hours; same facts re-typed in care plan, call note and audit form.</div></div></div>
+ </div>
+ <div class="navyb" style="font-size:15.5px;font-weight:700;line-height:1.3">"Her clinical instinct is the most valuable thing she brings. It is barely used."</div>
+</div>
+<style>
+.tlr{flex:1;align-items:center;position:relative}
+.tm{width:48px;font-weight:800;color:var(--navy);font-size:14px}
+.tdot{width:12px;height:12px;border-radius:50%;background:var(--navy);margin:0 13px 0 8px;flex:none;position:relative;border:2px solid #F7F7F7}
+.tx{flex:1;background:var(--rt);border:1px solid var(--rb);border-radius:6px;padding:5px 9px;font-size:13.5px;line-height:1.26;align-self:stretch;display:flex;align-items:center}
+.tx span,.tx b{display:inline}
+.tlr.j .tx{background:var(--p2);border-color:var(--blue)}
+.tlr.j .tdot{background:var(--blue)}
+
+</style>
+
+<div class="col" style="left:964px;width:612px">
+ <div class="hd">Reality check on the workload</div>
+ <table class="tb big">
+  <tr><th style="width:124px">Brief's range</th><th style="width:176px">Our verdict</th><th>Best evidence</th></tr>
+  <tr><td><b>Complex CM 30-60</b></td><td><span class="blu">Supported;</span> highest acuity runs 10-29</td><td>ACHP 2011 plan table; Iowa cap 45 avg / 50 max (LTSS, 2025); NC 29:1 and 46:1 (rate model, 2022)</td></tr>
+  <tr><td><b>Telephonic DM 100-200+</b></td><td><span class="blu">Supported</span> as a range</td><td>Virginia MCO median 144 (2022); ACHP 2011; NC 87:1-142:1</td></tr>
+  <tr><td><b>Transitions 60-100+</b></td><td><span class="rd">Not validated as caseload.</span> Works as flow: about 71 discharges a month</td><td>NC ~143 productive hrs/month / 2 one-hour contacts = ~71 <span class="t t-e">Our estimate</span>; CTI coach holds 24-28 at a time, ~300/yr</td></tr>
+ </table>
+ <div class="f grow" style="flex-direction:column;gap:7px">
+  <div class="card tile2"><div class="num">68%</div><div>of care managers at one plan rated <span class="blu">duplicate entry and multi-system inefficiency</span> a major barrier <span class="t t-m">Measured, n=80, 2013</span></div></div>
+  <div class="card tile2"><div class="num">3 in 4</div><div>plan leaders see care managers as <span class="blu">information gatherers</span> more than trusted advisors <span class="t t-v">Vendor</span></div></div>
+  <div class="card tile2"><div class="num">$90,070</div><div>mean RN pay at insurance carriers, about <span class="blu">$53-56/hr loaded</span> <span class="t t-m">Measured BLS May 2023</span> <span class="t t-e">Our estimate</span></div></div>
+ </div>
+ <div class="dash" style="font-size:15px;font-weight:600;line-height:1.32;background:var(--p1)"><span class="blu">So what:</span> a bad day costs members a call and costs the plan <b class="nv">$53-56 an hour of ICU-grade judgment</b> spent reading screens.</div>
+</div>
+<div class="src">Sources: 1. <a href="https://achp.org/wp-content/uploads/ACHP-Care-Management-Handbook.pdf">ACHP handbook</a> 2. <a href="https://hhs.iowa.gov/media/15084/download?inline=">Iowa HHS</a> 3. <a href="https://medicaid.ncdhhs.gov/updated-tailored-care-management-rate-guidance-jan-24-2022/download">NC DHHS</a> 4. <a href="https://www.ajmc.com/view/challenges-faced-by-medicaid-managed-care-coordinators-working-with-members-with-substance-use-disorder">AJMC Virginia</a> 5. <a href="https://psnet.ahrq.gov/innovation/transition-coachesr-reduce-readmissions-medicare-patients-complex-postdischarge-needs">AHRQ PSNet</a> 6. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6557451/">PMC6557451</a> 7. <a href="https://pointclickcare.com/blog/our-markets/health-plans/what-care-managers-could-be-doing-instead-of-chasing-charts/">PointClickCare (vendor)</a> 8. <a href="https://www.bls.gov/oes/2023/may/naics4_524100.htm">BLS</a></div>
+<div class="pg">2</div>
+</section>
+
+<!-- =============== 3 =============== -->
+<section class="s3">
+<div class="tabs"><div class="on">Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">We estimate 49% of her day goes to chart assembly and documentation and only 12.5% to real conversations.</div>
+<div style="position:absolute;left:24px;top:80px;width:1552px;height:118px">
+ <div class="f" style="height:22px;font-size:13.5px;font-weight:800;text-align:center;line-height:18px">
+  <div style="width:1076.71px;color:var(--red);border:1.5px solid var(--red);border-bottom:0;margin-right:0">Lost: 333 min = 69%</div>
+  <div style="width:355.67px;color:var(--blue);border:1.5px solid var(--blue);border-bottom:0">Judgment: 110 min = 23%</div>
+  <div style="width:119.63px;color:var(--gry);border:1.5px solid #8A93A3;border-bottom:0">Neutral: 37 min</div>
+ </div>
+ <div class="f" style="height:50px;color:#fff;font-weight:700;font-size:13.5px;line-height:1.18;text-align:center">
+  <div style="width:404.17px;background:#A82A22;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Chart assembly</b><br>125 min · 26.0%</div>
+  <div style="width:355.67px;background:#CC4A40;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Documentation</b><br>110 min · 22.9%</div>
+  <div style="width:219.87px;background:#EE9E97;color:#3A0D0A;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Outreach logistics</b><br>68 min · 14.2%</div>
+  <div style="width:97px;background:#F6C8C4;color:#3A0D0A;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Triage</b><br>30 · 6.3%</div>
+  <div style="width:194px;background:#2B6CF0;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Real conversations</b><br>60 min · 12.5%</div>
+  <div style="width:161.67px;background:#8DB2F7;color:#0A2A73;border-right:2px solid #F7F7F7;padding-top:7px"><b style="font-weight:800">Coordination</b><br>50 min · 10.4%</div>
+  <div style="width:119.63px;background:#C9CFD9;color:#232B3A;padding-top:7px"><b style="font-weight:800">Team, admin</b><br>37 min · 7.7%</div>
+ </div>
+ <div class="f" style="height:40px;font-size:13.5px;line-height:1.25">
+  <div style="width:759.84px;border:1.5px solid var(--navy);border-top:0;height:22px;text-align:center;font-weight:800;color:var(--navy)">49% = chart + documentation: 235 of 480 minutes</div>
+  <div style="flex:1;padding-left:14px;color:var(--ink)">Stacked to 480 minutes. <b class="nv">60 minutes (12.5%)</b> are real conversations. <span class="t t-e">Our estimate</span> 69% counts all four lost categories.</div>
+ </div>
+</div>
+
+<div class="col" style="left:24px;top:194px;width:572px">
+ <div class="hd">Where the 480 minutes go</div>
+ <table class="tb">
+  <tr><th>Activity</th><th>Assumption</th><th class="tr" style="width:38px">Min</th><th class="tr" style="width:40px">%</th></tr>
+  <tr><td style="width:150px"><b>Chart assembly</b></td><td>10 members x (7 screens x 1.5 min + 2 min reconciling) = 12.5 min each</td><td class="tr">125</td><td class="tr">26.0</td></tr>
+  <tr><td><b>Documentation</b></td><td>3 contacts x 30 min (40-field assessment ~20 + note ~10) + 13 failed attempts x 1.5 min</td><td class="tr">110</td><td class="tr">22.9</td></tr>
+  <tr><td><b>Outreach logistics</b></td><td>16 dials x 3 min + 4 number hunts x 5 min</td><td class="tr">68</td><td class="tr">14.2</td></tr>
+  <tr><td><b>Real conversations</b></td><td>3 x 20 min</td><td class="tr">60</td><td class="tr">12.5</td></tr>
+  <tr><td><b>Clinical coordination</b></td><td>5 tasks x 10 min (auths, appointments, pharmacy, PCP)</td><td class="tr">50</td><td class="tr">10.4</td></tr>
+  <tr><td><b>Team, admin, interruptions</b></td><td>Residual</td><td class="tr">37</td><td class="tr">7.7</td></tr>
+  <tr><td><b>Queue triage &amp; side spreadsheet</b></td><td>30 min across the day</td><td class="tr">30</td><td class="tr">6.3</td></tr>
+  <tr style="background:var(--p1)"><td><b>Total</b></td><td></td><td class="tr"><b>480</b></td><td class="tr"><b>100</b></td></tr>
+ </table>
+ <div class="dash grow" style="padding:7px 10px">
+  <div class="sub" style="margin-bottom:3px">How sure are we? <span style="color:var(--amb)">Confidence: medium-low.</span></div>
+  <div style="margin-bottom:3px"><b class="nv">No time-motion study of payer case managers exists in our research; this is a bottom-up estimate to be replaced by a 2-4 week baseline.</b></div>
+  <ul class="u">
+   <li><i></i>Docs 22.9% sits inside hospital nurse measures: ~22% audit log, ~25%, 35.3% observed, 43% self-reported <span class="t t-p">Proxy</span></li>
+   <li><i></i>NC Medicaid rate model budgets 36% member contact and 36% prep/doc/travel, 1 hr prep/doc per hr talking <span class="t t-e">Assumption from a state rate model</span>. Our conversations + coordination = 23%, below that budget, consistent with the brief's "2 conversations by 3 pm".</li>
+   <li><i></i>Audit logs and self-report differ two-fold in one system, so measure both.</li>
+   <li><i></i><b class="nv">Sensitivity:</b> screens at 1 or 2 min moves chart assembly from 90 to 160 min.</li>
+  </ul>
+ </div>
+</div>
+
+<div class="col" style="left:608px;top:194px;width:476px">
+ <div class="hd">Ranked pain points (time 1-5 x consequence 1-5)</div>
+ <div class="g grow" style="grid-template-rows:repeat(5,1fr);gap:6px">
+  <div class="pain"><div class="sc" style="background:#A82A22;color:#fff"><b>15</b><span>5x3</span></div><div><b class="nv">1. Chart assembly across 6-7 screens.</b> 125 min; every other step waits for it.</div></div>
+  <div class="pain"><div class="sc" style="background:#CC4A40;color:#fff"><b>12</b><span>3x4</span></div><div><b class="nv">2. Failed outreach and bad contact data</b> (tie, ranked above docs because no reach means no care). 68 min; about half of phones/addresses were confirmable in one Medicaid study <span class="t t-m">Measured, 80,016 WI households</span>; 38% of safety-net plans trust state contact data.</div></div>
+  <div class="pain"><div class="sc" style="background:#CC4A40;color:#fff"><b>12</b><span>4x3</span></div><div><b class="nv">3. Documentation re-entry.</b> 110 min; same facts typed 3-4 times; after-hours.</div></div>
+  <div class="pain"><div class="sc" style="background:#EE9E97;color:#3A0D0A"><b>10</b><span>2x5</span></div><div><b class="nv">4. Unprioritized queue.</b> 30 min, but a missed clock is the costliest error.</div></div>
+  <div class="pain"><div class="sc" style="background:#F6C8C4;color:#3A0D0A"><b>8</b><span>2x4</span></div><div><b class="nv">5. Stale data shown as if current.</b> Time cost hides inside #1; the harm is wrong decisions.</div></div>
+ </div>
+ <div style="background:var(--at);border:1.5px solid var(--ab);border-radius:8px;padding:7px 10px"><b style="color:var(--amb)">What we will not claim:</b> in the one payer study, obstacles explained only 2-4% of variance in burnout and turnover intent. We do not sell this as a burnout cure.</div>
+</div>
+<style>
+.pain{display:flex;gap:9px;background:#fff;border:1px solid var(--p3);border-radius:8px;padding:5px 9px 5px 5px;align-items:center;font-size:13.5px;line-height:1.26}
+.sc{width:44px;align-self:stretch;border-radius:5px;flex:none;text-align:center;display:flex;flex-direction:column;justify-content:center;line-height:1.05}
+.sc b{font-size:21px;font-weight:800;color:inherit}.sc span{font-size:11.5px;font-weight:700}
+</style>
+
+<div class="col" style="left:1096px;top:194px;width:480px">
+ <div class="hd">What a workbench could give back</div>
+ <div class="f grow" style="gap:10px;align-items:stretch">
+  <div class="card" style="width:112px;flex:none;text-align:center;padding:6px 4px;display:flex;flex-direction:column;justify-content:center"><div class="num" style="font-size:30px">11</div><div style="font-weight:700;color:var(--navy)">min/day</div><div class="sub" style="font-size:13.5px;margin-top:3px">Scribe only</div></div>
+  <div style="flex:1;align-self:center">10% of documentation. Evidence: ambient scribes save ~16-22 min/day, 10% in the largest study <span class="t t-p">Proxy</span> <b class="rd">Too small to pay for a seat.</b></div>
+ </div>
+ <div class="f grow" style="gap:10px;align-items:stretch;background:var(--p2);border:1.5px solid var(--blue);border-radius:8px;padding:6px">
+  <div style="width:106px;flex:none;text-align:center;background:var(--blue);color:#fff;border-radius:6px;padding:6px 4px;display:flex;flex-direction:column;justify-content:center"><div style="font-size:30px;font-weight:800;line-height:1.05">110</div><div style="font-weight:700">min/day</div><div style="font-size:13.5px;font-weight:800;margin-top:3px">Base case</div></div>
+  <div style="flex:1;align-self:center">Chart 125 to 60, documentation 110 to 90, triage 30 to 15, outreach 68 to 58. Buys <b class="nv">~2 more conversations a day (3 to 5)</b> at ~50 min per conversation all-in. <span class="t t-e">Our estimate</span></div>
+ </div>
+ <div class="f grow" style="gap:10px;align-items:stretch">
+  <div class="card" style="width:112px;flex:none;text-align:center;padding:6px 4px;display:flex;flex-direction:column;justify-content:center"><div class="num" style="font-size:30px">155</div><div style="font-weight:700;color:var(--navy)">min/day</div><div class="sub" style="font-size:13.5px;margin-top:3px">Stretch</div></div>
+  <div style="flex:1;align-self:center">Chart 40, documentation 80, triage 10, outreach 48. <span class="t t-e">Our estimate</span></div>
+ </div>
+ <div class="navyb" style="font-size:16px;font-weight:700;line-height:1.28;display:flex;flex-direction:column;justify-content:center"><div>Chart assembly (125 min) beats documentation (110 min).</div><div style="color:#fff;font-weight:800;font-size:21px;margin-top:3px">Build the view before the scribe.</div></div>
+ <div class="dash" style="display:flex;gap:12px;align-items:center;background:#fff"><div class="num" style="font-size:27px;flex:none">$23-25k</div><div>per CM per year of capacity value (capacity, not cash savings): 110 min x 240 days x $53-56/hr <span class="t t-e">Our estimate</span></div></div>
+</div>
+<div class="src">Sources: 1. <a href="https://medicaid.ncdhhs.gov/updated-tailored-care-management-rate-guidance-jan-24-2022/download">NC DHHS rate guidance</a> 2. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3037121/">Hendrich PMC3037121</a> 3. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6371290/">PMC6371290</a> 4. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9300261">PMC9300261</a> 5. <a href="https://news.massgeneralbrigham.org/en/ai-scribes-linked-to-modest-reductions-in-ehr-documentation-time">Rotenstein/MGB</a> 6. <a href="https://www.uclahealth.org/news/release/ucla-study-finds-ai-scribes-may-reduce-documentation-time">UCLA</a> 7. <a href="https://www.povertyactionlab.org/evaluation/impact-outreach-and-assistance-navigators-medicaid-renewals-united-states">J-PAL</a> 8. <a href="https://www.kff.org/medicaid/understanding-the-role-of-medicaid-managed-care-plans-in-unwinding-pandemic-era-continuous-enrollment-perspectives-from-safety-net-plans/">KFF</a> 9. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6557451/">PMC6557451</a></div>
+<div class="pg">3</div>
+</section>
+
+<!-- =============== 4 =============== -->
+<section class="s4">
+<div class="tabs"><div>Problem</div><div class="on">Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">20 datasets earn their place only if they change what Maria does; 12 are MVP, 8 wait.</div>
+<div class="col" style="left:24px;width:1132px;gap:5px">
+ <div class="f" style="gap:10px;align-items:center"><div class="hd">12 in the MVP</div><div class="dash" style="flex:1;padding:4px 10px;font-size:15px;font-weight:700;color:var(--navy);background:var(--p1)">The test for every row: <span class="blu">"What would Maria do differently because she saw this?"</span></div></div>
+ <table class="tb" id="t4">
+  <tr><th style="width:216px">Dataset &amp; source</th><th style="width:278px">What Maria does differently</th><th style="width:222px">Freshness</th><th>Expected quality problem <svg class="ar" style="color:#fff"><use href="#ar"/></svg> how we handle it</th></tr>
+  <tr><td><b>1. Member &amp; eligibility</b> (plan core admin)</td><td>Routes by language, state licence, LOB; knows which rule applies</td><td>Daily</td><td>Language and LOB stale <svg class="ar"><use href="#ar"/></svg> field shows as-of; update from each call</td></tr>
+  <tr><td><b>2. Member contact &amp; preferences</b> (enrollment, pharmacy, provider, CM log)</td><td>Dials the number most likely to work, at the best hour</td><td>Static until updated</td><td>~half confirmable in one state <svg class="ar"><use href="#ar"/></svg> score each number, log wrong numbers</td></tr>
+  <tr><td><b>3. ADT event notices</b> (hospitals, HIE)</td><td>Knows who to call first and that a clock started</td><td>Near real-time; no measured latency</td><td>Rule requires only name, practitioner, institution; no dx/disposition <svg class="ar"><use href="#ar"/></svg> treat as trigger, never as clinical content</td></tr>
+  <tr><td><b>4. Discharge summary / CCD</b> (HIE, TEFCA, fax)</td><td>Reads why admitted, med changes, follow-ups</td><td>12-34% available at first visit (older review)</td><td>Pending tests missing 65% <svg class="ar"><use href="#ar"/></svg> "summary not received" is a task with a clock</td></tr>
+  <tr><td><b>5. Claims, medical</b> (core claims)</td><td>Sees history and utilization, never today</td><td>44-46% received in service month, ~95% final at 4 months (FFS; use plan's own lag)</td><td>Late, can change <svg class="ar"><use href="#ar"/></svg> show service + received dates; "may change"</td></tr>
+  <tr><td><b>6. Pharmacy fills</b> (PBM, Part D)</td><td>Spots refill gaps; asks why</td><td>First record 99.44% by next month; 80.34% final</td><td>Cash fills invisible <svg class="ar"><use href="#ar"/></svg> label "dispensed", never "taking"</td></tr>
+  <tr><td><b>7. Labs</b> (lab vendors, HIE)</td><td>Sees A1c, eGFR, BNP trend; decides escalation</td><td>Varies; no verified latency</td><td>LOINC mis-mapped 4.6% of results <svg class="ar"><use href="#ar"/></svg> show "result not received" distinct from "not done"; surface unmapped</td></tr>
+  <tr><td><b>8. Case history &amp; care plan</b> (CM system of record)</td><td>Doesn't restart; sees open goals, barriers, last promise</td><td>Live</td><td>Free text <svg class="ar"><use href="#ar"/></svg> AI extracts with source link; clinician confirms</td></tr>
+  <tr><td><b>9. Outreach log</b> (dialer, CM system)</td><td>Knows attempts, what counts, what failed</td><td>Live</td><td>Robocalls logged as attempts <svg class="ar"><use href="#ar"/></svg> channel and automated flag per attempt</td></tr>
+  <tr><td><b>10. Prior authorization</b> (UM system; CMS-0057 APIs from 1 Jan 2027)</td><td>Sees expiring home health or DME before it lapses</td><td>Daily; decisions in 72 hr / 7 days</td><td>Drugs excluded from rule <svg class="ar"><use href="#ar"/></svg> show status + last updated</td></tr>
+  <tr><td><b>11. HRA &amp; SDOH screen</b> (HRA vendor, Z codes)</td><td>Asks about food, housing and transport first</td><td>Staleness unmeasured</td><td>Z codes on just 1.59% FFS, 1.07% MA, 1.66% Medicaid <svg class="ar"><use href="#ar"/></svg> date every answer; blank is not "no need"</td></tr>
+  <tr><td><b>12. Quality gaps &amp; clocks</b> (HEDIS engine, rules)</td><td>Sees TRC, FMC, FUH, HRA deadlines in hours</td><td>Daily</td><td>Measure set changes yearly (MRP left Stars 2027, stays in TRC) <svg class="ar"><use href="#ar"/></svg> rules config, not code</td></tr>
+ </table>
+</div>
+<div class="col" style="left:1168px;width:408px;gap:5px">
+ <div class="hd">8 wait: later, and why</div>
+ <table class="tb grow">
+  <tr><th style="width:124px">Dataset</th><th style="width:88px">Decision</th><th>Why later</th></tr>
+  <tr><td><b>13. Risk scores</b> (plan models)</td><td>Who is rising</td><td>Stale and opaque; MVP uses transparent rules first</td></tr>
+  <tr><td><b>14. Appointments &amp; referrals</b></td><td>Is a visit booked</td><td>No coverage figure; manual confirm in MVP</td></tr>
+  <tr><td><b>15. Provider directory</b></td><td>Who to refer to</td><td>52.20% of MA locations inaccurate (2016-17); never sole basis</td></tr>
+  <tr><td><b>16. Home health &amp; SNF</b> (OASIS, MDS)</td><td>Who is in the home</td><td>Feed varies; auth + claims proxy in MVP</td></tr>
+  <tr><td><b>17. BH / Part 2</b> (consent-gated)</td><td>Safe BH coordination</td><td>Single TPO consent since Feb 2026; consent tags needed first</td></tr>
+  <tr><td><b>18. Remote monitoring</b></td><td>Weight gain alerts</td><td>Few members enrolled; alert risk</td></tr>
+  <tr><td><b>19. Community resources</b></td><td>Closes a social need</td><td>Quality varies; link out first</td></tr>
+  <tr><td><b>20. Death data</b> (DMF, state)</td><td>Stop outreach to deceased</td><td>DMF in-hospital sensitivity 88.9% to 14.8% after 2011; never close a case on DMF alone</td></tr>
+ </table>
+ <div style="background:var(--rt);border:1.5px solid var(--rb);border-radius:8px;padding:7px 10px"><b class="rd">Left out on purpose:</b> social media, consumer credit, wearables without consent. They fail the "what would Maria do" test or the trust test.</div>
+</div>
+<div class="src">Sources: 1. <a href="https://www.law.cornell.edu/cfr/text/42/482.24">42 CFR 482.24(d)</a> 2. <a href="https://resdac.org/sites/default/files/2026-04/ccw-original-medicare-claims-part-d-events-maturity.pdf">CCW/ResDAC Apr 2026</a> 3. <a href="https://pubmed.ncbi.nlm.nih.gov/17327525/">Kripalani 2007</a> 4. <a href="https://healthit.gov/data/data-briefs/interoperable-exchange-patient-health-information-among-us-hospitals-2023/">ONC DB71</a> 5. <a href="https://www.povertyactionlab.org/evaluation/impact-outreach-and-assistance-navigators-medicaid-renewals-united-states">J-PAL</a> 6. <a href="https://www.cms.gov/files/document/z-codes-data-highlight.pdf">CMS Z-code</a> 7. <a href="https://pubmed.ncbi.nlm.nih.gov/42532448/">Gutkind 2026</a> 8. <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f">CMS-0057-F</a> 9. <a href="https://www.law.cornell.edu/cfr/text/42/2.33">42 CFR 2.33</a> 10. <a href="https://www.cms.gov/medicare/health-plans/managedcaremarketing/downloads/provider_directory_review_industry_report_round_2_updated_1-31-18.pdf">CMS 2016-17 directory review</a> 11. <a href="https://pubmed.ncbi.nlm.nih.gov/30520023/">Levin 2019</a> 12. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9846663">LOINC study</a></div>
+<div class="pg">4</div>
+</section>
+
+<!-- =============== 5 =============== -->
+<section class="s5">
+<div class="tabs"><div>Problem</div><div class="on">Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Data becomes useful when combined and when it admits its age: 8 insight recipes and 1 trust model.</div>
+<div class="col" style="left:24px;width:900px;gap:6px">
+ <div class="hd">8 insight recipes</div>
+ <div class="rh"><div></div><div>Datasets combined</div><div></div><div>The insight no single source shows</div><div></div><div>What Maria does</div></div>
+ <div class="rc"><div class="rn">1</div><div class="rd2"><span class="dc">ADT discharge</span><i>+</i><span class="dc">Pharmacy fills</span><i>+</i><span class="dc">Appointments</span></div><div class="eq">=</div><div class="ri">"Has not picked up HF medication since discharge"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Call today, fix pickup, book 7-day visit.</div></div>
+ <div class="rc"><div class="rn">2</div><div class="rd2"><span class="dc">Discharge med list</span><i>+</i><span class="dc">PBM</span><i>+</i><span class="dc">PCP list</span></div><div class="eq">=</div><div class="ri">"Lisinopril and sacubitril/valsartan on different lists"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Confirm with member, escalate same day.</div></div>
+ <div class="rc"><div class="rn">3</div><div class="rd2"><span class="dc">Refill gap</span><i>+</i><span class="dc">A1c</span><i>+</i><span class="dc">Cash-pay signal</span></div><div class="eq">=</div><div class="ri">"Stopped, or just paying cash?"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Ask neutrally about cost before labelling non-adherent.</div></div>
+ <div class="rc"><div class="rn">4</div><div class="rd2"><span class="dc">ED alerts</span><i>+</i><span class="dc">Claims</span><i>+</i><span class="dc">Contact log</span></div><div class="eq">=</div><div class="ri">"5 ED visits, 0 PCP visits, 0 connects"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Switch channel, involve CHW.</div></div>
+ <div class="rc"><div class="rn">5</div><div class="rd2"><span class="dc">Pharmacy phone</span><i>+</i><span class="dc">CM log</span><i>+</i><span class="dc">Outreach history</span></div><div class="eq">=</div><div class="ri">"Pharmacy has a newer number"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Dial that first.</div></div>
+ <div class="rc"><div class="rn">6</div><div class="rd2"><span class="dc">SDOH screen</span><i>+</i><span class="dc">ADT address</span></div><div class="eq">=</div><div class="ri">"Screen says housed; ADT says shelter"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Ask, re-screen, route to LCSW.</div></div>
+ <div class="rc"><div class="rn">7</div><div class="rd2"><span class="dc">Auth end date</span><i>+</i><span class="dc">Home health claims</span><i>+</i><span class="dc">Notes</span></div><div class="eq">=</div><div class="ri">"Home health lapses Thursday and caregiver is strained"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Extend before it lapses.</div></div>
+ <div class="rc"><div class="rn">8</div><div class="rd2"><span class="dc">Rule engine</span><i>+</i><span class="dc">Attempt log</span></div><div class="eq">=</div><div class="ri">"3 logged, only 1 counts"</div><svg class="ar"><use href="#ar"/></svg><div class="ra">Schedule compliant attempt at a different time.</div></div>
+</div>
+<style>
+.rh,.rc{display:grid;grid-template-columns:28px 292px 18px 278px 21px 1fr;align-items:center;column-gap:6px}
+.rh{font-weight:800;color:var(--navy);font-size:13.5px;line-height:1.1;border-bottom:1.5px solid var(--navy);padding-bottom:3px}
+.rc{flex:1;background:#fff;border:1px solid var(--p3);border-radius:8px;padding:3px 9px 3px 7px}
+.rn{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;text-align:center;line-height:26px;font-size:14px}
+.rd2{display:flex;flex-wrap:wrap;align-items:center;gap:3px}
+.rd2 i{font-style:normal;font-weight:800;color:var(--navy);font-size:13.5px}
+.dc{background:var(--p1);border:1px solid var(--p3);border-radius:10px;padding:0 7px;font-size:12.5px;line-height:19px;color:var(--navy);font-weight:600;white-space:nowrap}
+.eq{font-size:20px;font-weight:800;color:var(--navy);text-align:center}
+.ri{font-weight:700;color:var(--blue);font-size:14px;line-height:1.22}
+.ra{font-size:14px;line-height:1.22}
+</style>
+<div class="col" style="left:936px;width:640px;gap:7px">
+ <div class="hd">Data trust model</div>
+ <div class="g" style="grid-template-columns:repeat(4,1fr);gap:7px">
+  <div style="background:var(--gt);border:1px solid var(--gb);border-radius:7px;padding:5px 8px;color:var(--grn);text-align:center;font-weight:600"><div style="font-weight:800;font-size:15.5px">Fresh</div>within expected window</div>
+  <div style="background:var(--at);border:1px solid var(--ab);border-radius:7px;padding:5px 8px;color:var(--amb);text-align:center;font-weight:600"><div style="font-weight:800;font-size:15.5px">Aging</div>past expected window</div>
+  <div style="background:var(--rt);border:1px solid var(--rb);border-radius:7px;padding:5px 8px;color:var(--red);text-align:center;font-weight:600"><div style="font-weight:800;font-size:15.5px">Stale</div>cannot drive an action alone</div>
+  <div style="background:var(--gyt);border:1.5px dashed var(--gry);border-radius:7px;padding:5px 8px;color:var(--gry);text-align:center;font-weight:600"><div style="font-weight:800;font-size:15.5px">Not received</div>"not received" is not "none"</div>
+ </div>
+ <div class="g" style="grid-template-columns:1fr 1fr;gap:7px">
+  <div class="card f" style="gap:8px"><svg class="ic" style="color:var(--blue)"><use href="#clock"/></svg><div><b class="nv">As-of date and source</b> on every clinical field.</div></div>
+  <div class="card f" style="gap:8px"><svg class="ic" style="color:var(--blue)"><use href="#shield"/></svg><div><b class="nv">Label by what the data can prove:</b> "dispensed", not "taking"; "admitted", not "why".</div></div>
+  <div class="card f" style="gap:8px"><svg class="ic" style="color:var(--blue)"><use href="#alert"/></svg><div><b class="nv">Conflicts stay side by side; no silent winner.</b> Suggested order: member-confirmed today &gt; discharge list &gt; PCP/HIE &gt; PBM &gt; claims.</div></div>
+  <div class="card f" style="gap:8px"><svg class="ic" style="color:var(--blue)"><use href="#link"/></svg><div><b class="nv">Confidence on AI extractions:</b> High / Check / Not found, each with source link.</div></div>
+ </div>
+ <div class="hd">Why this matters</div>
+ <div class="g grow" style="grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:7px">
+  <div class="card"><div class="num" style="font-size:27px">44-46%</div><div style="margin:2px 0">of inpatient and physician claims received in the service month; ~95% final after 4 months (Medicare FFS, Jul 2023)</div><span class="t t-m">Measured</span><div style="margin:3px 0"><b class="nv">So:</b> never current status.</div></div>
+  <div class="card"><div class="num" style="font-size:27px">12-34%</div><div style="margin:2px 0">discharge summaries available at first follow-up (2007 review, probably overstates today)</div><span class="t t-m">Measured, dated</span><div style="margin:3px 0"><b class="nv">So:</b> missing = task + clock.</div></div>
+  <div class="card"><div class="num" style="font-size:27px">43%</div><div style="margin:2px 0">hospitals routinely interoperable, 2023</div><span class="t t-m">Measured</span><div style="margin:3px 0"><b class="nv">So:</b> show source and conflicts.</div></div>
+  <div class="card"><div class="num" style="font-size:27px">1.59%</div><div style="margin:2px 0">of Medicare FFS beneficiaries with a Z code, 2019</div><span class="t t-m">Measured</span><div style="margin:3px 0"><b class="nv">So:</b> blank is not "no need".</div></div>
+  <div class="card" style="grid-column:span 2"><div class="num" style="font-size:21px;line-height:1.15">Name, practitioner, institution</div><div style="margin:3px 0">All the federal ADT rule requires; plans not named as recipients</div><span class="t t-r">Rule</span><div style="margin:3px 0"><b class="nv">So:</b> a trigger, never clinical content; confirm feed coverage per plan.</div></div>
+ </div>
+ <div class="dash" style="background:var(--p1)"><b class="nv">Gap note:</b> we could not verify a national ADT adoption %, MA claims lag curve, or PBM latency. Each plan's own lag triangle replaces our defaults.</div>
+</div>
+<div class="src">Sources: 1. <a href="https://resdac.org/sites/default/files/2026-04/ccw-original-medicare-claims-part-d-events-maturity.pdf">CCW/ResDAC Apr 2026</a> 2. <a href="https://pubmed.ncbi.nlm.nih.gov/17327525/">Kripalani 2007</a> 3. <a href="https://healthit.gov/data/data-briefs/interoperable-exchange-patient-health-information-among-us-hospitals-2023/">ONC DB71</a> 4. <a href="https://www.cms.gov/files/document/z-codes-data-highlight.pdf">CMS Z-code</a> 5. <a href="https://www.law.cornell.edu/cfr/text/42/482.24">42 CFR 482.24(d)</a></div>
+<div class="pg">5</div>
+</section>
+
+<!-- =============== 6 =============== -->
+<section class="s6">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div class="on">Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Five fictional members, each built to break a different part of the product.</div>
+<div class="dash" style="position:absolute;left:24px;top:80px;width:1552px;padding:4px 12px;font-size:14.5px;font-weight:600;color:var(--navy);background:var(--p1)"><span class="blu">Each stresses a different product decision;</span> 6+ datasets, 5 planted imperfections each; 8 am line per patient. Full data in annex.</div>
+<div class="g" id="pg" style="position:absolute;left:24px;top:116px;width:1552px;bottom:30px;grid-template-columns:104px repeat(5,1fr);grid-template-rows:auto auto 1fr auto auto repeat(5,20px);column-gap:7px;row-gap:5px">
+ <div></div>
+ <div class="ph"><div class="pn">P1 Walter Brooks, 71</div><div>MA-PPO | SYN-1001</div></div>
+ <div class="ph"><div class="pn">P2 Denise Carter, 66</div><div>MA-HMO | SYN-1002</div></div>
+ <div class="ph"><div class="pn">P3 Marcus Bell, 52</div><div>D-SNP | SYN-1003</div></div>
+ <div class="ph"><div class="pn">P4 Tanya Reed, 34</div><div>Medicaid MCO | SYN-1004</div></div>
+ <div class="ph"><div class="pn">P5 Ana Reyes, 82</div><div>D-SNP | SYN-1005</div></div>
+
+ <div class="rl">Scenario and stress</div>
+ <div class="ps"><b class="nv">Fresh HF discharge.</b><br><span class="blu">Stresses:</span> clock + med conflict.</div>
+ <div class="ps"><b class="nv">Rising-risk diabetic, stopped refills.</b><br><span class="blu">Stresses:</span> false positive + stale risk score.</div>
+ <div class="ps"><b class="nv">Unreachable frequent ED user.</b><br><span class="blu">Stresses:</span> outreach + compliance.</div>
+ <div class="ps"><b class="nv">Depression + housing instability.</b><br><span class="blu">Stresses:</span> routing, privacy, AI restraint.</div>
+ <div class="ps"><b class="nv">Senior with caregiver strain.</b><br><span class="blu">Stresses:</span> free text, language, expiring auth.</div>
+
+ <div class="rl">5 planted imperfections</div>
+ <ul class="u pi"><li><i></i>ADT without diagnosis</li><li><i></i>Last claim 45 days old hides the admission</li><li><i></i>Discharge summary not received</li><li><i></i>Lisinopril active on HIE list while sacubitril/valsartan on discharge list</li><li><i></i>Sacubitril/valsartan not filled</li></ul>
+ <ul class="u pi"><li><i></i>A1c 9.6 under local lab code, missing from structured panel</li><li><i></i>Risk score 3 months stale says "moderate"</li><li><i></i>Metformin gap 32 days but $4 generic cash fills invisible</li><li><i></i>Last PCP note 5 months old</li><li><i></i>Phone typed "home" actually mobile</li></ul>
+ <ul class="u pi"><li><i></i>Disconnected phone</li><li><i></i>Pharmacy has a newer number</li><li><i></i>One ED visit counted twice across feeds</li><li><i></i>Robocall logged as attempt</li><li><i></i>2 human attempts in same morning band</li></ul>
+ <ul class="u pi"><li><i></i>SDOH screen 8 months old says housed</li><li><i></i>ADT address is a shelter</li><li><i></i>Mail returned</li><li><i></i>Consent-gated record may exist</li><li><i></i>Discharge med list incomplete</li></ul>
+ <ul class="u pi"><li><i></i>Eligibility says English, last call needed Tagalog interpreter</li><li><i></i>Caregiver strain only in free text</li><li><i></i>Home-health auth ends Thu 12 Nov</li><li><i></i>SNF claim delayed 60 days</li><li><i></i>CKD stage conflict across sources</li></ul>
+
+ <div class="rl" style="background:var(--navy);color:#fff;border-color:var(--navy)"><svg class="ic" style="margin-bottom:2px"><use href="#clock"/></svg><br>8 am line</div>
+ <div class="p8">Discharged Saturday; new sacubitril/valsartan not picked up and lisinopril may still be active, a contraindicated pair. <b class="nv">Call this morning before Tue's clock, confirm what he takes, alert cardiology same day, book the 7-day visit.</b></div>
+ <div class="p8">No emergency. A1c rose 7.8 to 9.6 and fills stopped. <b class="nv">Call at lunch, ask without judgment about cost or cash fills, then book PCP and a repeat A1c.</b></div>
+ <div class="p8">5 ED visits in 90 days and no connect. Log shows 3 attempts, only 1 counts. HRA due 18 Nov. <b class="nv">Do not redial the dead number: call the pharmacy-record mobile at 4 pm and send a CHW referral.</b></div>
+ <div class="p8">Psych discharge 3 Nov: 7-day follow-up lapses tomorrow. <b class="nv">Route to Sam (LCSW). Reach her via the shelter caseworker, ask about housing first, book the visit.</b> AI gives no risk statement here.</div>
+ <div class="p8">Home health ends Thursday and her daughter sounded exhausted last call. <b class="nv">Extend the auth today, then call the daughter after 5 pm with a Tagalog interpreter available; ask about respite.</b></div>
+
+ <div style="grid-column:1 / span 6;font-weight:800;font-size:14px;color:var(--navy);border-bottom:1.5px solid var(--navy);line-height:1.2;padding-bottom:2px;margin-top:1px">Coverage: which obstacle from the brief each member tests</div>
+ <div class="cv">Messy</div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div>
+ <div class="cv">Untimely</div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="x"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div>
+ <div class="cv">Burden</div><div class="cd"><span class="x"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="x"></span></div><div class="cd"><span class="y"></span></div>
+ <div class="cv">Documentation</div><div class="cd"><span class="y"></span></div><div class="cd"><span class="x"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div>
+ <div class="cv">Outreach</div><div class="cd"><span class="x"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div><div class="cd"><span class="y"></span></div>
+</div>
+<style>
+.ph{background:var(--navy);color:#fff;padding:5px 10px;font-size:13.5px;font-weight:600;line-height:1.22}
+.pn{font-size:16px;font-weight:800}
+.rl{background:var(--p1);border:1.5px dashed var(--navy);border-radius:7px;font-weight:800;color:var(--navy);font-size:13.5px;line-height:1.2;text-align:center;padding:4px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rl br{display:none}
+.ps{background:#fff;border:1px solid var(--p3);padding:5px 10px;font-size:13.5px;line-height:1.28}
+.pi{background:#fff;border:1px solid var(--p3);padding:6px 9px;font-size:13.5px;line-height:1.24}
+.pi li{margin-bottom:4px}
+.p8{background:var(--p2);border:1.5px solid var(--blue);padding:6px 9px;font-size:13.5px;line-height:1.27}
+.cv{font-size:12.5px;font-weight:700;color:var(--navy);text-align:right;line-height:20px}
+.cd{text-align:center;background:#fff;border-bottom:1px solid #DFE6F2;line-height:18px}
+.cd span{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-1px}
+.cd .y{background:var(--blue)}
+.cd .x{background:#fff;border:1.5px solid var(--p3)}
+</style>
+<div class="src">Fictional data, no PHI. Phones use reserved 555-01xx. Full records: mCase_Synthetic_Patients_Annex.xlsx</div>
+<div class="pg">6</div>
+</section>
+
+<!-- =============== 7 =============== -->
+<section class="s7">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div class="on">Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">mCase is a 3-screen overlay: who now, what is true, what next; AI drafts and a clinician decides.</div>
+<div class="col" style="left:24px;width:388px">
+ <div class="hd">Introducing mCase Workbench</div>
+ <div style="font-size:14.5px;line-height:1.32">Web overlay on the plan's existing care system (<b class="nv">Jiva, GuidingCare, TruCare etc.</b>). <span class="blu">It does not replace the system of record.</span></div>
+ <div class="f grow" style="flex-direction:column;gap:0">
+  <div class="fn" style="background:var(--p1)"><div class="fi"><svg class="ic" style="width:24px;height:24px"><use href="#grid"/></svg></div><div><div style="font-weight:600;color:var(--navy)">Screen 1 Queue</div><div class="big">WHO NOW</div><div>Brief (b): whom to work on</div></div></div>
+  <div class="fa"><span></span></div>
+  <div class="fn" style="background:var(--p1)"><div class="fi"><svg class="ic" style="width:24px;height:24px"><use href="#user"/></svg></div><div><div style="font-weight:600;color:var(--navy)">Screen 2 Member 360</div><div class="big">WHAT IS TRUE</div><div>Brief (a): timely, trustworthy picture</div></div></div>
+  <div class="fa"><span></span></div>
+  <div class="fn" style="background:var(--p1)"><div class="fi"><svg class="ic" style="width:24px;height:24px"><use href="#phone"/></svg></div><div><div style="font-weight:600;color:var(--navy)">Screen 3 Outreach &amp; Docs</div><div class="big">WHAT NEXT</div><div>Brief (b) and (c): next step, less friction</div></div></div>
+  <div class="fa"><span></span></div>
+  <div class="fn" style="background:var(--navy);color:#fff;border-color:var(--navy);flex:.72"><div class="fi" style="background:#fff"><svg class="ic" style="width:24px;height:24px"><use href="#db"/></svg></div><div><div style="font-weight:800;font-size:16px">Write-back to system of record</div><div>Signed notes only</div></div></div>
+ </div>
+</div>
+<style>
+.fn{flex:1;display:flex;gap:11px;align-items:center;border:1.5px solid var(--p3);border-radius:9px;padding:6px 12px;font-size:13.5px;line-height:1.25}
+.fi{width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.fn:last-child .fi{color:var(--navy)}
+.fn .big{font-weight:800;font-size:19px;color:var(--blue);line-height:1.15}
+.fa{height:17px;position:relative}
+.fa span{position:absolute;left:50%;top:0;margin-left:-7px;width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:13px solid var(--navy);margin-top:2px}
+</style>
+<div class="col" style="left:424px;width:596px;gap:7px">
+ <div class="hd">How Next Best Action works (rules first, not a black box)</div>
+ <div style="background:#fff;border:1px solid var(--p3);border-radius:8px;padding:6px 10px">
+  <div class="wrow" style="font-weight:800;color:var(--navy)"><div>Priority score 0-100</div><div>Weight</div><div class="tr">Walter</div></div>
+  <div class="wrow"><div><b class="nv">Clock urgency</b></div><div class="f" style="align-items:center;gap:6px"><div style="width:40%;height:14px;background:var(--navy)"></div><b class="nv">40%</b></div><div class="tr">0.40x90</div></div>
+  <div class="wrow"><div><b class="nv">Clinical signal</b></div><div class="f" style="align-items:center;gap:6px"><div style="width:35%;height:14px;background:var(--blue)"></div><b class="nv">35%</b></div><div class="tr">0.35x95</div></div>
+  <div class="wrow"><div><b class="nv">Actionable today</b></div><div class="f" style="align-items:center;gap:6px"><div style="width:15%;height:14px;background:#8DB2F7"></div><b class="nv">15%</b></div><div class="tr">0.15x90</div></div>
+  <div class="wrow"><div><b class="nv">Complexity</b></div><div class="f" style="align-items:center;gap:6px"><div style="width:10%;height:14px;background:var(--p3)"></div><b class="nv">10%</b></div><div class="tr">0.10x60</div></div>
+  <div style="border-top:1.5px solid var(--navy);margin-top:3px;padding-top:4px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div style="line-height:1.22">Weights are <span class="blu">our assumption</span>, tuned with clinicians in the pilot. <span class="t t-e">Our estimate</span></div><div class="num" style="font-size:26px;flex:none">= 88.75</div></div>
+ </div>
+ <div class="g grow" style="grid-template-columns:1fr 18px 1fr 18px 1fr;grid-template-rows:1fr 18px 1fr;align-items:center">
+  <div class="st"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:var(--blue)"><use href="#bell"/></svg><b>1 Trigger</b>ADT, gap, rule</div><svg class="ar" style="margin:0;width:16px;color:var(--navy)"><use href="#ar"/></svg>
+  <div class="st"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:var(--blue)"><use href="#shield"/></svg><b>2 Evidence check</b>Is data fresh enough?</div><svg class="ar" style="margin:0;width:16px;color:var(--navy)"><use href="#ar"/></svg>
+  <div class="st"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:var(--blue)"><use href="#doc"/></svg><b>3 Rule picks action</b>From a clinician-approved library</div>
+  <div></div><div></div><div></div><div></div>
+  <div class="f" style="justify-content:center"><svg width="12" height="16" viewBox="0 0 12 16" style="fill:none;stroke:var(--navy);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M6 1v13M2 10l4 4 4-4"/></svg></div>
+  <div class="st" style="background:var(--navy);color:#fff;border-color:var(--navy)"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:#fff"><use href="#chart"/></svg><b style="color:#fff">6 Weekly review</b>Tunes rules</div><svg class="ar" style="margin:0;width:16px;color:var(--navy)" viewBox="0 0 15 10"><path d="M14 5H2M6 1L2 5l4 4"/></svg>
+  <div class="st"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:var(--blue)"><use href="#user"/></svg><b>5 Maria decides</b>Accepts, edits or dismisses with a reason</div><svg class="ar" style="margin:0;width:16px;color:var(--navy)" viewBox="0 0 15 10"><path d="M14 5H2M6 1L2 5l4 4"/></svg>
+  <div class="st"><svg class="ic" style="width:26px;height:26px;align-self:center;margin-bottom:5px;color:var(--blue)"><use href="#link"/></svg><b>4 Show reason + source</b>Never an unexplained score</div>
+ </div>
+ <div class="card"><b class="nv">Why rules:</b> auditable; explainable; Section 1557 reaches tools that guide care; ML ranking after a pilot baseline.</div>
+ <div class="pale"><div style="font-weight:800;color:var(--navy);margin-bottom:4px">Clocks wired in <span class="t t-r">Rule</span></div><div class="f" style="flex-wrap:wrap;gap:4px 5px"><span class="ck">2 business days (TCM contact)</span><span class="ck">7/14 day visit</span><span class="ck">TRC 3/3/30/31 days</span><span class="ck">FMC 7 days</span><span class="ck">FUH 7 days</span><span class="ck">SNP 3 non-automated attempts</span><span class="ck">HRA 90 days</span></div></div>
+</div>
+<style>
+.st{background:#fff;border:1.5px solid var(--p3);border-radius:8px;padding:5px 9px;text-align:center;height:100%;font-size:13.5px;line-height:1.22;display:flex;flex-direction:column;justify-content:center}
+.st b{display:block;color:var(--blue);font-weight:800;font-size:14px}
+.ck{background:#fff;border:1px solid var(--navy);border-radius:11px;padding:0 8px;font-size:12.5px;line-height:20px;font-weight:700;color:var(--navy);white-space:nowrap}
+</style>
+<div class="col" style="left:1032px;width:544px">
+ <div class="hd">What is automated, what a clinician must confirm</div>
+ <div class="f grow" style="flex-direction:column;gap:5px">
+  <div class="lad" style="margin-right:0"><div class="lh" style="background:var(--p2);color:var(--navy)">AI does, spot-check</div><div class="lb">Normalize records, find documents, pre-fill demographics, encounter timeline, call-list logistics</div></div>
+  <div class="lad"><div class="lh" style="background:#8DB2F7;color:var(--navy)">AI drafts, clinician edits and signs</div><div class="lb">Chart summary, case note, call summary, suggested goals</div></div>
+  <div class="lad"><div class="lh" style="background:var(--blue);color:#fff">Clinician confirms each item</div><div class="lb">Active medications and changes, allergies, new diagnoses, risk statements, social needs, preferences</div></div>
+  <div class="lad"><div class="lh" style="background:var(--navy);color:#fff">Clinician only, no AI recommendation</div><div class="lb">Coverage, program discharge, escalation and safety, suicide or abuse assessment</div></div>
+ </div>
+ <div class="dash">
+  <div style="margin-bottom:4px"><b class="rd">Omissions were 76.3%</b> of AI note errors across 5 scribes (simulated) <span class="t t-p">Proxy</span></div>
+  <div style="margin-bottom:4px">GPT-4o F1: <b class="nv">94.0%</b> for med extraction, <b class="rd">72.7%</b> with discontinuation status (preprint) <span class="t t-p">Proxy</span></div>
+  <div style="margin-bottom:4px"><span class="blu">So:</span> every sentence links to its source; "not found" is shown; meds confirmed item by item.</div>
+  <div style="font-weight:700;color:var(--navy)">No LLM study for payer case managers exists. Our pilot will produce it.</div>
+ </div>
+</div>
+<style>
+.lad{flex:1;display:grid;grid-template-columns:172px 1fr;border:1px solid var(--p3);background:#fff}
+.lh{font-weight:800;font-size:14px;line-height:1.22;padding:6px 10px;display:flex;align-items:center}
+.lb{padding:6px 11px;font-size:13.5px;line-height:1.27;display:flex;align-items:center}
+</style>
+<div class="src">Sources: 1. <a href="https://www.law.cornell.edu/cfr/text/45/92.210">45 CFR 92.210</a> 2. <a href="https://www.ncqa.org/report-cards/health-plans/state-of-health-care-quality-report/measures-list/transitions-of-care-trc/">NCQA TRC</a> 3. <a href="https://www.ncqa.org/report-cards/health-plans/state-of-health-care-quality-report/follow-up-after-emergency-department-visit-for-people-with-high-risk-multiple-chronic-conditions-fmc/">NCQA FMC</a> 4. <a href="https://www.ncqa.org/report-cards/health-plans/state-of-health-care-quality-report/measures-list/follow-up-after-hospitalization-for-mental-illness-fuh/">NCQA FUH</a> 5. <a href="https://www.law.cornell.edu/cfr/text/42/422.101">42 CFR 422.101(f)</a> 6. <a href="https://www.aafp.org/family-physician/practice-and-career/getting-paid/coding/transitional-care-management/faq.html">AAFP TCM</a> 7. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12605248/">Anderson PMC12605248</a> 8. <a href="https://arxiv.org/abs/2506.11137v2">Shao arXiv 2506.11137</a></div>
+<div class="pg">7</div>
+</section>
+
+<!-- =============== 8 WIRE 1 =============== -->
+<section class="s8" data-links="n81>c81:h;n86>c86:h;n87>c87:h;n85>c85:h;n82>c82:vhv@646;n83>c83:v;n84>c84:v">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div class="on">Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Screen 1, Work Queue: sorted by the nearest clock and what can be acted on today, always with a reason.</div>
+
+<div class="lap" style="left:236px;top:84px;width:1128px">
+<div class="scr" style="height:522px">
+ <div class="appb"><div class="wm"><span>Hi</span>Labs</div><div style="font-weight:800;color:var(--navy);font-size:13.5px">mCase Workbench</div><div class="tab on">Queue</div><div class="tab">Member 360</div><div class="tab">Outreach &amp; Docs</div><div class="grow"></div><div style="font-weight:700;color:var(--navy)">Mon 9 Nov, 08:00</div><div class="f" style="gap:4px;align-items:center;color:var(--navy);font-weight:700;padding-right:26px"><svg class="ic" style="width:15px;height:15px"><use href="#bell"/></svg>Prompts: max 10 a day</div></div>
+ <span class="n" id="n87" style="position:absolute;right:4px;top:5px">7</span>
+ <div class="f" style="padding:7px 12px 6px;align-items:center;gap:12px;position:relative"><div style="font-size:19px;font-weight:800;color:var(--navy);line-height:1.2">Good morning, Maria. <span style="color:var(--blue)">5 of 48 need you today.</span></div><span class="n" id="n81" style="position:absolute;left:-10px;top:9px">1</span></div>
+ <div class="g" style="grid-template-columns:150px 190px 1fr 360px;gap:8px;padding:0 12px 6px;align-items:stretch">
+  <div class="pnl f" style="align-items:center;gap:7px;padding:3px 9px"><b style="font-size:21px;font-weight:800;color:var(--navy)">5</b><span style="font-weight:700">priority today</span></div>
+  <div class="pnl f" style="align-items:center;gap:7px;padding:3px 9px;background:var(--rt);border-color:var(--rb)"><b style="font-size:21px;font-weight:800;color:var(--red)">2</b><span style="font-weight:700;color:var(--red)">clocks due by Tue</span></div>
+  <div class="pnl" style="padding:4px 9px"><div class="f" style="justify-content:space-between;font-weight:700;color:var(--navy)"><span>Capacity</span><span>6.4 of 7.5 hrs</span></div><div style="height:9px;background:var(--p2);border-radius:5px;margin-top:2px"><div style="width:85.3%;height:9px;background:var(--blue);border-radius:5px"></div></div></div>
+  <div class="f" style="gap:4px;align-items:center;justify-content:flex-end"><span class="btn" style="padding:2px 9px">All</span><span class="btn g2">Clocks</span><span class="btn g2">Discharges</span><span class="btn g2">Gaps</span><span class="btn g2">Unreachable</span></div>
+ </div>
+ <table class="wt" id="q" style="table-layout:fixed">
+  <colgroup><col style="width:42px"><col style="width:190px"><col style="width:250px"><col style="width:210px"><col style="width:130px"><col style="width:108px"><col></colgroup>
+  <tr style="height:26px"><th>#</th><th>Member</th><th>Why now<span class="n" id="n82" style="position:absolute;right:0;top:3px">2</span></th><th>Next best action</th><th>Clock<span class="n" id="n83" style="position:absolute;right:0;top:3px">3</span></th><th>Best window<span class="n" id="n84" style="position:absolute;right:0;top:3px">4</span></th><th>Data trust<span class="n" id="n85" style="position:absolute;right:-10px;top:3px">5</span></th></tr>
+<tr class="rw" style="background:#F4F8FF"><td><span class="f" style="align-items:center;gap:2px"><svg class="ic" style="width:13px;height:13px;color:var(--mut)"><use href="#drag"/></svg><b style="font-size:15px">1</b></span></td><td><b style="font-size:14px">Walter Brooks, 71</b><br>MA-PPO &middot; score 88.75</td><td>HF discharge Sat; new med not picked up; 2 lists conflict</td><td><b>Call; reconcile meds; book 7-day</b></td><td class="ck2">Contact by Tue 5 pm</td><td>Now-11 am</td><td><span class="c c-a">Summary not received</span></td></tr>
+<tr class="rw"><td><span class="f" style="align-items:center;gap:2px"><svg class="ic" style="width:13px;height:13px;color:var(--mut)"><use href="#drag"/></svg><b style="font-size:15px">2</b></span></td><td><b style="font-size:14px">Tanya Reed, 34</b><br>Medicaid &middot; score 84.75<br><span style="color:var(--blue);font-weight:700">Shared-team row: routed to Sam, LCSW</span></td><td>Psych discharge 3 Nov; shelter address on ADT</td><td><b>Reach via caseworker; book visit</b></td><td class="ck2">FUH 7-day ends Tue</td><td>10 am-12 pm</td><td><span class="c c-s">SDOH 8 months old</span></td></tr>
+<tr class="rw"><td><span class="f" style="align-items:center;gap:2px"><svg class="ic" style="width:13px;height:13px;color:var(--mut)"><use href="#drag"/></svg><b style="font-size:15px">3</b></span></td><td><b style="font-size:14px">Ana Reyes, 82</b><br>D-SNP &middot; score 64.00</td><td>Home health ends Thu; caregiver strain in notes</td><td><b>Extend auth; call daughter + interpreter</b></td><td class="ck2">Auth ends Thu</td><td>After 5 pm</td><td><span class="c c-a">Language conflict</span></td></tr>
+<tr class="rw"><td><span class="f" style="align-items:center;gap:2px"><svg class="ic" style="width:13px;height:13px;color:var(--mut)"><use href="#drag"/></svg><b style="font-size:15px">4</b></span></td><td><b style="font-size:14px">Marcus Bell, 52</b><br>D-SNP &middot; score 60.00</td><td>5 ED in 90 days; 1 of 3 attempts counts</td><td><b>Call new mobile; CHW referral</b></td><td class="ck2">HRA due 18 Nov</td><td>4 pm</td><td><span class="c c-s">Phone disconnected</span></td></tr>
+<tr class="rw"><td><span class="f" style="align-items:center;gap:2px"><svg class="ic" style="width:13px;height:13px;color:var(--mut)"><use href="#drag"/></svg><b style="font-size:15px">5</b></span></td><td><b style="font-size:14px">Denise Carter, 66</b><br>MA-HMO &middot; score 43.50</td><td>A1c 7.8 to 9.6; fills stopped</td><td><b>Non-judgmental call; PCP + A1c</b></td><td class="ck2">PDC gap</td><td>12-1 pm</td><td><span class="c c-a">Possible cash fills</span></td></tr>
+  <tr><td colspan="7" style="background:var(--gyt);color:var(--gry);font-weight:700;padding:7px 12px;border:0;font-size:13px">43 others: no action today (next touch dates shown)</td></tr>
+ </table>
+ <span class="n" id="n86" style="position:absolute;left:-10px;top:204px">6</span>
+</div></div>
+<div class="base" style="left:216px;top:626px;width:1168px"><div></div></div>
+<style>
+.rw td{height:70px;padding-top:7px}.s8 .wt td{font-size:13px}.s8 .wt td:nth-child(3),.s8 .wt td:nth-child(5),.s8 .wt td:nth-child(6){padding-right:24px}.s8 .wt th{font-size:12.5px}
+.ck2{font-weight:800;color:var(--red)}
+</style>
+
+<div class="note" id="c81" style="left:24px;top:92px;width:190px"><span class="n">1</span><b class="nv">Above the fold:</b> only members needing action today. Why: answers "who needs me today?" in 10 seconds.</div>
+<div class="note" id="c86" style="left:24px;top:262px;width:190px"><span class="n">6</span><b class="nv">Reorder with a reason:</b> logged and reviewed weekly; Maria stays in charge. Bulk-dismiss not allowed on clock items.</div>
+<div class="dash" style="position:absolute;left:24px;top:476px;width:190px;background:var(--p1);padding:8px 9px;line-height:1.27;font-size:14.5px"><b class="nv">Why not sort by risk score?</b> Risk says who is sick, not who Maria can help today.</div>
+<div class="note" id="c87" style="left:1386px;top:92px;width:190px"><span class="n">7</span><b class="nv">Alert budget:</b> max 10 prompts a day, severity-tiered, precision published (override evidence 49-96% in drug alerts <span class="t t-p">Proxy</span>; Epic sepsis PPV 12% <span class="t t-p">Proxy</span>).</div>
+<div class="note" id="c85" style="left:1386px;top:272px;width:190px"><span class="n">5</span><b class="nv">Trust chip</b> warns before the chart is opened.</div>
+<div class="card" style="position:absolute;left:1386px;top:476px;width:190px;padding:6px 9px;line-height:1.9"><div style="font-weight:800;color:var(--navy);line-height:1.3">Trust chips</div><span class="c c-f">Fresh</span> <span class="c c-a">Aging</span> <span class="c c-s">Stale</span> <span class="c c-n">Not received</span></div>
+
+<div class="note" id="c82" style="left:24px;top:656px;width:616px"><span class="n">2</span><b class="nv">"Why now" in plain words</b> beside each name. No unexplained score. Score visible but secondary.</div>
+<div class="note" id="c83" style="left:652px;top:656px;width:444px"><span class="n">3</span><b class="nv">Clock column names the deadline</b> (regulatory or clinical). It carries the most weight in the sort.</div>
+<div class="note" id="c84" style="left:1108px;top:656px;width:468px"><span class="n">4</span><b class="nv">Best window</b> shifts Ana to the evening instead of blocking the top of the list: actionable today beats merely urgent.</div>
+
+<div class="f" style="position:absolute;left:24px;top:736px;width:1552px;height:130px;background:var(--navy);color:#fff;align-items:center;gap:22px;padding:0 24px;border-radius:8px">
+ <div style="flex:none;text-align:center"><div style="font-size:42px;font-weight:800;line-height:1">8:00 am</div><div style="font-weight:700;font-size:14px;margin-top:3px">Walkthrough: all 5 ranked</div></div>
+ <div style="width:2px;height:92px;background:var(--p3)"></div>
+ <div style="font-size:19px;font-weight:600;line-height:1.36">Six alerts become one ordered list. <b style="font-weight:800">Walter is first, not because his score is highest in a black box, but because a clock and a contraindicated pair are both open.</b> Denise is fifth and stays visible, so a slow risk is not lost.</div>
+</div>
+<svg class="links"></svg>
+<div class="src"><span>Sources: 1. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC1447540">van der Sijs (alert overrides)</a> 2. <a href="https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781313">Epic sepsis model</a> &nbsp; Fictional data, no PHI.</span></div>
+<div class="pg">8</div>
+</section>
+
+<!-- =============== 9 WIRE 2 =============== -->
+<section class="s9" data-links="n91>c91:h;n96>c96:h;n95>c95:h;n93>c93:h;n92>c92:h;n94>c94:h">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div class="on">Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Screen 2, Member 360: every field shows its age and source; conflicts stay visible until a clinician resolves them.</div>
+<div class="lap" style="left:236px;top:84px;width:1128px">
+<div class="scr" style="height:594px;display:flex;flex-direction:column">
+ <div class="appb"><div class="wm"><span>Hi</span>Labs</div><div style="font-weight:800;color:var(--navy);font-size:13.5px">mCase Workbench</div><div class="tab">Queue</div><div class="tab on">Member 360</div><div class="tab">Outreach &amp; Docs</div></div>
+ <div class="f" style="background:var(--navy);color:#fff;padding:5px 12px;align-items:center;gap:10px;font-size:12.5px;font-weight:600"><b style="font-size:15.5px;font-weight:800">Walter Brooks, 71</b><span>MA-PPO</span><span>SYN-1001</span><span>| English</span><span>| Spouse Helen (caregiver)</span><span>| Best time 9-11 am</span><span>| PCP Dr. Lin</span><span>| Day 2 after discharge</span></div>
+ <div class="g" style="grid-template-columns:1fr 410px;gap:7px;padding:7px 9px 0">
+  <div class="pnl" style="background:#F7FAFF"><div class="f" style="justify-content:space-between;align-items:center;margin-bottom:3px"><div class="pt">Why you're here</div><span class="c" style="background:var(--p2);color:var(--navy)">AI draft: every line links to source</span></div>
+   <div style="position:relative;line-height:1.5;font-size:13.5px;padding-left:8px"><span class="n" id="n91" style="position:absolute;left:-19px;top:0">1</span>Discharged Sat 7 Nov after HF admission <span style="color:var(--blue);font-weight:700;text-decoration:underline">ADT</span><br><span class="n" id="n96" style="position:absolute;left:-19px;top:21px">6</span>Diagnosis <b class="rd">inferred</b> from HIE ED note, <b class="rd">not confirmed</b> <span style="color:var(--blue);font-weight:700;text-decoration:underline">HIE</span><br>New sacubitril/valsartan not filled <span style="color:var(--blue);font-weight:700;text-decoration:underline">PBM</span>. Discharge summary not received.</div></div>
+  <div class="pnl"><div class="pt" style="margin-bottom:3px">Next best actions</div>
+   <div style="line-height:1.5;font-size:13.5px"><span class="box"></span> <b class="nv">1. Call Walter or Helen today</b> (clock Tue 5 pm) <span style="color:var(--blue);font-weight:700;text-decoration:underline">ADT</span><br><span class="box"></span> <b class="nv">2. Reconcile meds:</b> lisinopril + sacubitril/valsartan conflict<br><span class="box"></span> <b class="nv">3. Book cardiology within 7 days</b> <span style="color:var(--blue);font-weight:700;text-decoration:underline">Rule</span></div></div>
+ </div>
+ <div class="g grow" style="grid-template-columns:150px 1fr;gap:7px;padding:7px 9px">
+  <div class="pnl" style="background:#F7FAFF;position:relative"><div class="pt" style="margin-bottom:6px">Data health</div><span class="n" id="n95" style="position:absolute;left:-19px;top:112px">5</span>
+   <div class="dh"><span class="c c-f">Fresh</span><div><b>ADT</b> 2 days</div></div>
+   <div class="dh"><span class="c c-f">Fresh</span><div><b>PBM</b> 1 day</div></div>
+   <div class="dh"><span class="c c-s">Stale</span><div><b>Claims</b> 45 days</div></div>
+   <div class="dh"><span class="c c-n">Not received</span><div><b>Discharge summary</b></div></div>
+   <div class="dh"><span class="c c-a">Aging</span><div><b>SDOH</b> 5 months</div></div>
+  </div>
+  <div class="f" style="flex-direction:column;gap:7px">
+   <div class="pnl" style="padding:0;border-color:var(--red)">
+    <div class="f" style="padding:5px 8px;align-items:center;gap:8px;background:var(--rt);position:relative;border-radius:5px 5px 0 0"><div class="pt" style="color:var(--red)">Conflicts to resolve: medications</div><span class="n" id="n93" style="position:absolute;left:668px;top:3px">3</span></div>
+    <table class="wt" style="table-layout:fixed">
+     <colgroup><col style="width:190px"><col style="width:158px"><col style="width:120px"><col style="width:130px"><col style="width:168px"><col></colgroup>
+     <tr><th>Drug</th><th>Discharge list 7 Nov</th><th>HIE/PCP 12 Oct</th><th>PBM last fill</th><th style="background:var(--at);color:var(--amb)">Member says</th><th class="ctr">Maria confirms</th></tr>
+     <tr><td><b>Sacubitril/valsartan 49/51</b></td><td>Yes</td><td>No</td><td><span class="rd">Not filled</span></td><td style="background:#FEF8E8;font-weight:700;color:var(--amb)">?</td><td class="ctr"><span class="box"></span></td></tr>
+     <tr><td><b>Lisinopril 20 mg</b></td><td>No</td><td>Yes</td><td>Filled 21 Oct</td><td style="background:#FEF8E8;font-weight:700;color:var(--amb)">?</td><td class="ctr"><span class="box"></span></td></tr>
+     <tr><td><b>Furosemide</b></td><td>80 mg</td><td>40 mg</td><td>40 mg 21 Oct</td><td style="background:#FEF8E8;font-weight:700;color:var(--amb)">?</td><td class="ctr"><span class="box"></span></td></tr>
+     <tr><td><b>Metoprolol succ. 50 mg</b></td><td>Yes</td><td>Yes</td><td>Filled 21 Oct</td><td style="background:#FEF8E8;font-weight:700;color:var(--amb)">?</td><td class="ctr"><span class="box"></span></td></tr>
+    </table>
+    <div class="f" style="padding:5px 8px;gap:6px;align-items:center;color:var(--red);font-weight:800;background:var(--rt);font-size:12.5px;position:relative;border-radius:0 0 5px 5px"><svg class="ic" style="width:15px;height:15px"><use href="#alert"/></svg>Lisinopril + sacubitril/valsartan: contraindicated if both taken. Clinician confirms.<span class="n" id="n92" style="position:absolute;right:-10px;top:3px">2</span></div>
+   </div>
+   <div class="pnl grow" style="position:relative"><div class="pt" style="margin-bottom:5px">Timeline</div>
+    <div style="position:absolute;left:18px;right:18px;top:37px;height:2px;background:var(--p3)"></div>
+    <div class="g" style="grid-template-columns:repeat(5,1fr);gap:6px;position:relative">
+     <div class="tln"><span class="tld"></span><b>25 Sep</b> Cardiology claim, latest on file, 45 days old<br><span class="c c-s">Stale</span></div>
+     <div class="tln"><span class="tld"></span><b>2 Nov</b> Admitted (ADT)<br><span class="c c-f">Fresh</span></div>
+     <div class="tln"><span class="tld"></span><b>2 Nov</b> BNP 1,240 pg/mL (HIE), admission value<br><span class="c c-a">Aging</span></div>
+     <div class="tln"><span class="tld"></span><b>7 Nov</b> Discharged (ADT)<br><span class="c c-f">Fresh</span></div>
+     <div class="tln" style="position:relative"><span class="tld" style="background:#fff;border:2px solid var(--gry)"></span><b>Summary</b> requested; task open<br><span class="c c-n">Not received</span><span class="n" id="n94" style="position:absolute;right:-9px;top:-3px">4</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div style="background:var(--gyt);color:var(--gry);font-weight:700;padding:5px 12px;font-size:12px">Below the fold: full claims, care plan, SDOH details, documents</div>
+</div></div>
+<div class="base" style="left:216px;top:698px;width:1168px"><div></div></div>
+<style>
+.dh{margin-bottom:9px;font-size:12px;line-height:1.3}
+.dh b{color:var(--navy)}
+.tln{font-size:12px;line-height:1.27;position:relative}
+.tld{display:block;width:12px;height:12px;border-radius:50%;background:var(--blue);margin:0 0 5px 7px}
+</style>
+<div class="note" id="c91" style="left:24px;top:138px;width:190px"><span class="n">1</span><b class="nv">Summary leads,</b> because Maria needs 60 seconds of context. Links required.</div>
+<div class="note" id="c96" style="left:24px;top:236px;width:190px"><span class="n">6</span><b class="nv">AI labels diagnosis as "inferred",</b> not confirmed.</div>
+<div class="card" style="position:absolute;left:24px;top:574px;width:190px;padding:6px 9px;line-height:1.9"><div style="font-weight:800;color:var(--navy);line-height:1.3">Trust chips</div><span class="c c-f">Fresh</span> <span class="c c-a">Aging</span> <span class="c c-s">Stale</span> <span class="c c-n">Not received</span><div style="line-height:1.25;margin-top:3px;font-size:13.5px">"Not received" is not "none".</div></div>
+<div class="note" id="c95" style="left:24px;top:318px;width:190px"><span class="n">5</span><b class="nv">Freshness chip</b> shows age/source; Stale items never drive an action by themselves.</div>
+
+<div class="note" id="c93" style="left:1386px;top:236px;width:190px"><span class="n">3</span><b class="nv">"Member says"</b> column empty until the call: only she can fill it.</div>
+<div class="note" id="c92" style="left:1386px;top:372px;width:190px"><span class="n">2</span><b class="nv">Conflict table is the core of the screen:</b> the product does not pick a winner.</div>
+<div class="note" id="c94" style="left:1386px;top:498px;width:190px"><span class="n">4</span><b class="nv">"Not received"</b> is a task with a clock, not a blank.</div>
+
+<div class="f" style="position:absolute;left:24px;top:722px;width:1552px;height:144px;background:var(--navy);color:#fff;align-items:center;gap:18px;padding:0 20px;border-radius:8px">
+ <div style="flex:none;font-size:19px;font-weight:800;line-height:1.2;width:84px">Maria's move</div>
+ <div style="flex:none;background:var(--rt);color:var(--red);border-radius:7px;padding:6px 12px;text-align:center;font-weight:700"><div style="font-size:13.5px">Before</div><div style="font-size:22px;font-weight:800;line-height:1.1">12.5 min</div><div style="font-size:13.5px">6-7 screens</div></div>
+ <svg width="24" height="18" viewBox="0 0 24 18" style="flex:none;fill:none;stroke:#fff;stroke-width:2.200;stroke-linecap:round;stroke-linejoin:round"><path d="M2 9h19M15 3l6 6-6 6"/></svg>
+ <div style="flex:none;background:var(--gt);color:var(--grn);border-radius:7px;padding:6px 12px;text-align:center;font-weight:700"><div style="font-size:13.5px">After <span class="t t-e">Our estimate</span></div><div style="font-size:22px;font-weight:800;line-height:1.1">~6 min</div><div style="font-size:13.5px">1 screen</div></div>
+ <div style="font-size:20px;font-weight:600;line-height:1.34;margin-left:8px">She notices what she always noticed, the list does not add up, but <b style="font-weight:800">at 8:06, not 11:30.</b> What she does differently: <b style="font-weight:800">calls first about lisinopril, not a generic discharge script.</b></div>
+</div>
+<svg class="links"></svg>
+<div class="src">Walk: Walter Brooks, SYN-1001. Fictional data, no PHI.</div>
+<div class="pg">9</div>
+</section>
+
+<!-- =============== 10 WIRE 3 =============== -->
+<section class="s10" data-mintop="122" data-links="n101>c101:h;n102>c102:h;n103>c103:h;n104>c104:h;n105>c105:h;n111>c111:h;n112>c112:h;n113>c113:h;n114>c114:h;n115>c115:h">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div class="on">Product Design</div><div>Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Screen 3, Outreach &amp; Documentation: reach the right person first, then sign a draft whose every line links to its source.</div>
+
+<!-- Marcus -->
+<div style="position:absolute;left:204px;top:84px;width:580px;border:1.5px solid #8C97AB;border-radius:10px;background:#fff;height:662px">
+ <div class="chrome"><span class="d"></span><span class="d"></span><span class="d"></span><div>mcase.hilabs.example/outreach/SYN-1003</div></div>
+ <div class="scr" style="border-radius:0 0 9px 9px;height:636px;padding:0">
+  <div class="appb"><div class="wm"><span>Hi</span>Labs</div><div style="font-weight:800;color:var(--navy);font-size:13.5px">Outreach Cockpit: Marcus Bell</div><div class="grow"></div><span class="c" style="background:var(--p2);color:var(--navy)">Language shown before dial</span></div>
+  <div style="padding:8px 10px 0">
+   <div class="f" style="background:var(--navy);color:#fff;padding:5px 10px;align-items:center;gap:9px;font-weight:600;font-size:12.5px"><b style="font-size:14.5px;font-weight:800">Marcus Bell, 52</b>D-SNP | SYN-1003 | <span>5 ED in 90 days</span></div>
+   <div style="position:relative;margin-top:8px"><span class="n" id="n101" style="position:absolute;left:-20px;top:3px">1</span>
+   <table class="wt" style="border:1px solid var(--p3)">
+    <tr><th>Number</th><th>Source</th><th>Last verified</th><th>Confidence</th></tr>
+    <tr style="background:var(--gt)"><td><b>555-0142</b> mobile</td><td>Pharmacy record</td><td>28 Oct</td><td><span class="c c-f">High, try first</span></td></tr>
+    <tr><td><b>555-0117</b> home</td><td>Enrollment</td><td>2024</td><td><span class="c c-s">Disconnected, do not dial</span></td></tr>
+    <tr><td><b>CHW Ms. Ortiz</b></td><td>CM note</td><td>-</td><td><span class="c c-a">Medium</span></td></tr>
+   </table></div>
+   <div class="g" style="grid-template-columns:1fr 1fr;gap:7px;margin-top:8px">
+    <div class="pnl" style="background:#F7FAFF"><div class="pt">Best window: 4-6 pm</div><div>Based on past pickups. Prepaid phone: early month better.</div></div>
+    <div class="pnl" style="position:relative"><div class="pt">Consent status</div><div><span class="c c-f">Calls: yes</span> <span class="c c-n">SMS: not on file</span></div></div>
+   </div>
+   <div class="pnl" style="margin-top:8px;padding:0;position:relative"><div class="pt" style="padding:5px 8px 4px;background:var(--p1);border-radius:6px 6px 0 0">Attempt tracker</div><span class="n" id="n102" style="position:absolute;left:-20px;top:32px">2</span>
+    <table class="wt">
+     <tr><td style="width:96px"><b>27 Oct 10:15</b></td><td>Human, no answer</td><td><span class="c c-f">Counts</span></td></tr>
+     <tr><td><b>29 Oct 18:00</b></td><td>Robocall</td><td><span class="c c-s">Does not count: automated</span></td></tr>
+     <tr><td><b>4 Nov 10:30</b></td><td>Human, no answer</td><td><span class="c c-s">Does not count: same time band</span></td></tr>
+    </table>
+    <div style="background:var(--navy);color:#fff;padding:6px 10px;font-weight:700;font-size:13.5px;line-height:1.28;border-radius:0 0 5px 5px"><b style="font-weight:800">1 of 3 valid.</b> Next valid attempt: today after 12 pm. Then letter. HRA due 18 Nov.</div>
+   </div>
+   <div class="pnl" style="margin-top:8px;position:relative"><div class="pt" style="margin-bottom:5px">Log outcome: reason code</div><span class="n" id="n103" style="position:absolute;left:-29px;top:18px">3</span>
+    <div class="f" style="gap:5px;flex-wrap:wrap"><span class="btn g2">Wrong number</span><span class="btn g2">No answer</span><span class="btn g2">Reached, declined</span><span class="btn g2">Reached, engaged</span></div>
+    <div style="margin-top:5px;color:var(--mut);font-weight:600">Bad data and a decline are logged separately.</div></div>
+   <div class="pnl" style="margin-top:8px;position:relative;background:var(--rt);border-color:var(--rb)"><span class="n" id="n104" style="position:absolute;left:-29px;top:8px">4</span><div class="f" style="justify-content:space-between;align-items:center"><div class="pt" style="color:var(--red)">Member says stop? Revoke all</div><span class="btn" style="background:var(--red)">Opt out of all channels</span></div></div>
+   <div class="pnl f" style="margin-top:8px;position:relative;background:#F7FAFF;justify-content:space-between;align-items:center"><span class="n" id="n105" style="position:absolute;left:-29px;top:5px">5</span><div class="pt">Language and interpreter check</div><div>Shown before the dial button</div></div>
+   <div class="f" style="margin-top:8px;gap:8px;align-items:center;justify-content:flex-end"><span class="btn g2">Send CHW referral</span><span class="btn f" style="gap:5px;align-items:center;font-size:13.5px;padding:4px 14px"><svg class="ic" style="width:15px;height:15px;margin-right:5px"><use href="#phone"/></svg>Dial 555-0142 at 4 pm</span></div>
+  </div>
+ </div>
+</div>
+<div class="hd" style="position:absolute;left:24px;top:84px;width:168px;font-size:14px;padding:5px 9px">Outreach: Marcus</div>
+<div class="note" id="c101" style="left:24px;top:150px;width:168px"><span class="n">1</span><b class="nv">Number confidence:</b> dial the likeliest first, never the dead one.</div>
+<div class="note" id="c102" style="left:24px;top:300px;width:168px"><span class="n">2</span><b class="nv">Automated flag and different-time logic</b> from 42 CFR 422.101(f), read conservatively.</div>
+<div class="note" id="c103" style="left:24px;top:448px;width:168px"><span class="n">3</span><b class="nv">Separate bad data from decline.</b></div>
+<div class="note" id="c104" style="left:24px;top:556px;width:168px"><span class="n">4</span><b class="nv">Revoke-all opt-out</b> (TCPA 31 Jan 2027).</div>
+<div class="note" id="c105" style="left:24px;top:646px;width:168px"><span class="n">5</span><b class="nv">Language shown</b> before dial.</div>
+
+<!-- Ana -->
+<div style="position:absolute;left:816px;top:84px;width:580px;border:1.5px solid #8C97AB;border-radius:10px;background:#fff;height:662px">
+ <div class="chrome"><span class="d"></span><span class="d"></span><span class="d"></span><div>mcase.hilabs.example/docs/SYN-1005</div></div>
+ <div class="scr" style="border-radius:0 0 9px 9px;height:636px">
+  <div class="appb"><div class="wm"><span>Hi</span>Labs</div><div style="font-weight:800;color:var(--navy);font-size:13.5px">Documentation: Ana Reyes</div><div class="grow"></div><span class="c c-a">AI draft, not signed</span></div>
+  <div style="padding:8px 10px 0">
+   <div class="f" style="background:var(--navy);color:#fff;padding:5px 10px;align-items:center;gap:9px;font-weight:600;font-size:12.5px"><b style="font-size:14.5px;font-weight:800">Ana Reyes, 82</b>D-SNP | SYN-1005 | Post-call note</div>
+   <div style="margin-top:5px;font-weight:700;color:var(--navy);font-size:12.5px">Call with daughter (Grace), Tagalog interpreter, 9 Nov 5:20 pm</div>
+   <div class="pnl" style="margin-top:7px;padding:0;position:relative"><div class="pt" style="padding:5px 8px 4px;background:var(--p1);border-radius:6px 6px 0 0">Draft note: every line carries its source</div><span class="n" id="n111" style="position:absolute;right:-20px;top:3px">1</span>
+    <div class="ln"><div>Home health auth ends 12 Nov</div><span class="c" style="background:var(--p2);color:var(--navy)">UM</span><span class="box"></span></div>
+    <div class="ln"><div>Daughter reports exhaustion</div><span class="c" style="background:var(--p2);color:var(--navy)">This call 05:12</span><span class="box"></span></div>
+    <div class="ln"><div>Member's language: Tagalog</div><span class="c" style="background:var(--p2);color:var(--navy)">This call; eligibility says English</span><span class="box"></span></div>
+    <div class="ln" style="background:var(--at);position:relative;border-radius:0 0 6px 6px;border:0"><div style="color:var(--amb);font-weight:700"><svg class="ic" style="width:14px;height:14px"><use href="#flag"/></svg> Fall in last 30 days:</div><span class="c c-a">Not found in call or chart</span><span class="box"></span><span class="n" id="n112" style="position:absolute;right:-19px;top:6px">2</span></div>
+   </div>
+   <div class="pnl" style="margin-top:9px;position:relative"><span class="n" id="n113" style="position:absolute;right:-19px;top:30px">3</span><div class="pt" style="margin-bottom:6px">Assessment pre-fill (40-field form)</div>
+    <div class="f" style="height:24px;color:#fff;font-weight:700;font-size:12px;line-height:24px;text-align:center"><div style="width:77.5%;background:var(--blue)">31 pre-filled</div><div style="width:15%;background:#E2BE6A;color:#3F2A00">6 confirm</div><div style="width:7.5%;background:var(--red)">3</div></div>
+    <div style="margin-top:5px;font-size:12.5px"><b class="nv">31 of 40 fields pre-filled,</b> 6 from this call to confirm, <b class="rd">3 need Maria</b></div>
+   </div>
+   <div class="pnl" style="margin-top:9px;position:relative"><span class="n" id="n114" style="position:absolute;right:-19px;top:36px">4</span><div class="pt" style="margin-bottom:6px">One entry: sign once, writes to 4 places</div>
+    <div class="f" style="align-items:center;gap:6px"><span class="btn">Sign once</span><svg class="ar" style="color:var(--navy)"><use href="#ar"/></svg><div class="g" style="flex:1;grid-template-columns:repeat(4,1fr);gap:5px"><div class="wr">Assessment</div><div class="wr">Care plan</div><div class="wr">Call note</div><div class="wr">Audit form</div></div></div>
+   </div>
+   <div class="pnl" style="margin-top:9px;position:relative;background:#F7FAFF"><span class="n" id="n115" style="position:absolute;right:-19px;top:22px">5</span><div class="pt" style="margin-bottom:3px">Sign-off log</div><div style="font-size:12.5px;line-height:1.34">Who confirmed which line, and when, kept with the note. <b class="nv">AI drafts, Maria signs.</b><br>Interpretation: machine translation needs human review.</div></div>
+   <div class="f" style="margin-top:10px;gap:8px;justify-content:flex-end"><span class="btn g2" style="font-size:13.5px;padding:3px 12px">Confirm each flagged</span><span class="btn" style="font-size:13.5px;padding:4px 14px">Sign</span><span class="btn g2" style="font-size:13.5px;padding:3px 12px">Log</span></div>
+  </div>
+ </div>
+</div>
+<style>
+.ln{display:flex;align-items:center;gap:7px;padding:7px 8px;border-bottom:1px solid #DFE6F2;font-size:12.5px}
+.ln div{flex:1}
+.wr{background:var(--p1);border:1px solid var(--p3);border-radius:5px;text-align:center;font-weight:700;color:var(--navy);padding:4px 2px;font-size:12px}
+</style>
+<div class="hd" style="position:absolute;left:1408px;top:84px;width:168px;font-size:14px;padding:5px 9px">Docs: Ana</div>
+<div class="note" id="c111" style="left:1408px;top:150px;width:168px"><span class="n">1</span><b class="nv">Every line has a source.</b></div>
+<div class="note" id="c112" style="left:1408px;top:232px;width:168px"><span class="n">2</span><b class="nv">"Not found" is displayed</b> since omissions are the main failure.</div>
+<div class="note" id="c113" style="left:1408px;top:352px;width:168px"><span class="n">3</span><b class="nv">Pre-fill counts</b> make burden visible (40-field form).</div>
+<div class="note" id="c114" style="left:1408px;top:470px;width:168px"><span class="n">4</span><b class="nv">Write once,</b> 4 destinations.</div>
+<div class="note" id="c115" style="left:1408px;top:570px;width:168px"><span class="n">5</span><b class="nv">Sign-off log</b> = audit-ready.</div>
+
+<div class="f" style="position:absolute;left:24px;top:756px;width:1552px;height:110px;background:var(--navy);color:#fff;align-items:center;gap:18px;padding:0 22px;border-radius:8px">
+ <div style="flex:none;background:var(--gt);color:var(--grn);border-radius:7px;padding:5px 14px;text-align:center;font-weight:700"><div style="font-size:13.5px">Documentation per contact</div><div style="font-size:23px;font-weight:800;line-height:1.1">30 to ~24 min</div></div>
+ <span class="t t-e" style="flex:none">Our estimate</span>
+ <div style="font-size:21px;font-weight:600;line-height:1.3">We assume <b style="font-weight:800">less than the pre-fill promise suggests,</b> because the review must be real.</div>
+</div>
+<svg class="links"></svg>
+<div class="src">Sources: 1. <a href="https://www.law.cornell.edu/cfr/text/42/422.101">42 CFR 422.101(f)</a> 2. <a href="https://docs.fcc.gov/public/attachments/DA-26-12A1.pdf">TCPA FCC</a> 3. <a href="https://www.law.cornell.edu/cfr/text/47/64.1200">47 CFR 64.1200</a> 4. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12605248/">Anderson PMC12605248</a> &nbsp; Fictional data; phones use reserved 555-01xx.</div>
+<div class="pg">10</div>
+</section>
+
+<!-- =============== 11 =============== -->
+<section class="s11">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div class="on">Prioritize &amp; Measure</div><div>Pilot &amp; GTM</div></div>
+<div class="ttl">Build the view before the scribe; measure capacity and clocks, and refuse to promise readmissions.</div>
+<div class="col" style="left:24px;width:740px;bottom:224px;gap:6px">
+ <div class="hd">What we build first and why</div>
+ <div class="dash" style="background:var(--p1);padding:5px 10px"><b class="nv">The rule:</b> a feature ships in MVP only if it (1) protects a regulated or clinical clock or frees 15+ min/day and (2) passes the "what would Maria do differently" test.</div>
+ <table class="tb">
+  <tr><th>MVP feature</th><th class="ctr" style="width:130px">Minutes/day</th><th class="ctr" style="width:60px">Clock?</th><th class="ctr" style="width:140px">Effort S/M/L</th></tr>
+  <tr><td><b>Member 360 with freshness + conflicts</b></td><td class="ctr"><b>65</b></td><td class="ctr">yes</td><td class="ctr">L</td></tr>
+  <tr><td><b>Clock-sorted queue + reasons</b></td><td class="ctr"><b>15</b></td><td class="ctr">yes</td><td class="ctr">M</td></tr>
+  <tr><td><b>Next best action rules</b></td><td class="ctr">indirect</td><td class="ctr">yes</td><td class="ctr">M</td></tr>
+  <tr><td><b>Outreach cockpit + attempt rules</b></td><td class="ctr"><b>10</b></td><td class="ctr">yes</td><td class="ctr">M</td></tr>
+  <tr><td><b>Pre-fill + write-once docs</b></td><td class="ctr"><b>20</b></td><td class="ctr">no</td><td class="ctr">M</td></tr>
+  <tr><td><b>AI draft with source links</b></td><td class="ctr">included above</td><td class="ctr">no</td><td class="ctr">M</td></tr>
+  <tr><td><b>Measurement layer (time, clocks, audits)</b></td><td class="ctr">0</td><td class="ctr">n/a</td><td class="ctr">S (pilot needs it)</td></tr>
+ </table>
+ <div class="g grow" style="grid-template-columns:1fr 1fr;gap:8px">
+  <div class="card"><b class="blu">Later</b><ul class="u" style="margin-top:3px"><li><i></i>ML risk model after baseline</li><li><i></i>Capacity balancing across team</li><li><i></i>Closed-loop community referrals</li><li><i></i>Device data</li><li><i></i>Member-facing SMS assistant</li></ul></div>
+  <div style="background:var(--rt);border:1px solid var(--rb);border-radius:8px;padding:8px 11px"><b class="rd">Deliberately out</b><ul class="u rdl" style="margin-top:3px"><li><i></i>Coverage or UM recommendations</li><li><i></i>AI suicide or safety assessment</li><li><i></i>Auto-sent messages</li><li><i></i>Replacing the system of record</li><li><i></i>Voice bots (automated calls do not count under the SNP rule)</li></ul></div>
+ </div>
+</div>
+<div class="col" style="left:776px;width:800px;bottom:224px;gap:6px">
+ <div class="f" style="gap:10px;align-items:stretch"><div class="hd" style="align-self:center">Success metrics</div>
+  <div class="dash f" style="flex:1;align-items:center;gap:10px;padding:3px 11px"><svg class="ic" style="width:22px;height:22px;color:var(--blue)"><use href="#target"/></svg><div style="font-size:14px;line-height:1.2"><b class="blu">North star: Judgment time share</b> on conversations + clinical coordination</div><div class="num" style="font-size:24px;white-space:nowrap;margin-left:auto">23% to 35%+</div></div></div>
+ <table class="tb">
+  <tr><th>Metric</th><th style="width:234px">Baseline</th><th>90-day target</th></tr>
+  <tr><td><b>Prep time per case</b></td><td>12.5 min <span class="t t-e">est</span></td><td><b>6 min</b></td></tr>
+  <tr><td><b>Real conversations per CM/day</b></td><td>3 <span class="t t-e">est</span></td><td><b>5</b></td></tr>
+  <tr><td><b>Documentation per contact</b></td><td>30 min <span class="t t-e">est</span></td><td><b>24 min</b></td></tr>
+  <tr><td><b>Connect rate per dial</b></td><td>19% (3/16) <span class="t t-e">est</span></td><td><b>28% (5/18)</b></td></tr>
+  <tr><td><b>Wrong-number dials</b></td><td>25% (4/16) <span class="t t-e">est</span></td><td><b>12%</b></td></tr>
+  <tr><td><b>2-business-day contact on time</b></td><td>Measure in baseline (assume 65%)</td><td><b>90%</b></td></tr>
+  <tr><td><b>Active cases per manager</b></td><td>48</td><td><b>48 during pilot</b> (protect quality); 55 only if guardrails hold</td></tr>
+ </table>
+ <div class="g grow" style="grid-template-columns:318px 1fr;gap:8px">
+  <div class="card" style="padding:6px 10px"><b class="blu">Guardrails</b><ul class="u" style="margin-top:3px"><li><i></i>Major omission per audited AI draft &lt;2%, stop at 5%</li><li><i></i>Prompts at most 10 per CM/day</li><li><i></i>Precision published</li><li><i></i>Opt-outs honored within 10 business days</li></ul></div>
+  <div class="dash" style="padding:5px 10px;line-height:1.26"><div style="margin-bottom:5px"><b class="rd">Observed, not promised:</b> readmissions, ED visits, cost.</div><div style="margin-bottom:5px">Why: <b class="nv">Camden RCT 62.3% vs 61.7%, while naive pre/post showed a 38-point fall</b> <span style="white-space:nowrap"><span class="t t-m">Measured</span>;</span> <b class="nv">Medicare Health Support N=242,417 no reduction in admissions</b> <span style="white-space:nowrap"><span class="t t-m">Measured</span>.</span></div><div style="margin-bottom:5px">In-person nurse care did cut 24-week readmission, 37.1% to 20.3% (Naylor 1999) <span class="t t-m">Measured</span>; software does not make a phone program that model.</div><div>Avg stars 2027: TRC 3.4, FMC 2.5, PCR 3.4. With 3 adherence measures, ~17% of MA-PD weight <span class="t t-e">Our estimate</span></div></div>
+ </div>
+</div>
+<div style="position:absolute;left:24px;bottom:30px;width:1552px;height:186px;display:flex;flex-direction:column;gap:5px">
+ <div class="hd">Risks and mitigations</div>
+ <div class="g grow" style="grid-template-columns:repeat(5,1fr);gap:9px">
+  <div class="rk"><div class="rkh">Wrong or stale data drives action</div><div class="chv"></div><div class="rkm">Freshness gates; <span class="blu">stale data cannot trigger an action alone</span>; plan lag triangles.</div></div>
+  <div class="rk"><div class="rkh">Alert fatigue</div><div class="chv"></div><div class="rkm"><span class="blu">Prompt budget,</span> severity tiers, dismissed-prompt audit; publish precision.</div></div>
+  <div class="rk"><div class="rkh">Clinician distrust / automation bias</div><div class="chv"></div><div class="rkm">Source links, weekly rule review, random audits; <span class="blu">AI never fills "Member says".</span></div></div>
+  <div class="rk"><div class="rkh">AI omission</div><div class="chv"></div><div class="rkm"><span class="blu">"Not found" flags;</span> item confirmation; stop rule.</div></div>
+  <div class="rk"><div class="rkh">Regulatory creep (UM, Part 2, TCPA, 1557)</div><div class="chv"></div><div class="rkm"><span class="blu">Technical wall from coverage decisions;</span> consent tags; global opt-out; model inventory; counsel review.</div></div>
+ </div>
+</div>
+<style>
+.rk{display:flex;flex-direction:column}
+.rkh{background:var(--rt);border:1.5px solid var(--rb);border-radius:7px;color:var(--red);font-weight:800;font-size:14.5px;line-height:1.2;text-align:center;padding:6px 8px;height:54px;display:flex;align-items:center;justify-content:center}
+.chv{width:0;height:0;margin:0 auto;border-left:44px solid transparent;border-right:44px solid transparent;border-top:13px solid #8DB2F7}
+.rkm{flex:1;background:#fff;border:1.5px solid var(--p3);border-radius:7px;padding:6px 10px;font-size:13.5px;line-height:1.27;text-align:center;display:block}
+</style>
+<div class="src">Sources: 1. <a href="https://pubmed.ncbi.nlm.nih.gov/31914240/">Camden</a> 2. <a href="https://www.rti.org/publication/results-medicare-health-support-disease-management-pilot-program">MHS RTI</a> 3. <a href="https://pubmed.ncbi.nlm.nih.gov/10029122/">Naylor 1999</a> 4. <a href="https://www.cms.gov/newsroom/fact-sheets/2027-medicare-advantage-part-d-star-ratings">CMS Stars 2027</a> 5. <a href="https://www.cms.gov/files/document/2027-star-ratings-measures.pdf">CMS Star measures</a> 6. <a href="https://www.law.cornell.edu/cfr/text/42/422.101">42 CFR 422.101(f)</a> 7. <a href="https://www.law.cornell.edu/cfr/text/42/2.33">42 CFR 2.33</a> 8. <a href="https://www.law.cornell.edu/cfr/text/45/92.210">45 CFR 92.210</a> 9. <a href="https://docs.fcc.gov/public/attachments/DA-26-12A1.pdf">TCPA FCC</a></div>
+<div class="pg">11</div>
+</section>
+
+<!-- =============== 12 =============== -->
+<section class="s12">
+<div class="tabs"><div>Problem</div><div>Data Strategy</div><div>Synthetic Patients</div><div>Product Design</div><div>Prioritize &amp; Measure</div><div class="on">Pilot &amp; GTM</div></div>
+<div class="ttl">Pilot: 90 days, 30 case managers, a concurrent control, one MA plan, and a stop rule agreed up front.</div>
+<div class="col" style="left:24px;width:440px;gap:7px">
+ <div class="hd">First health plan</div>
+ <div class="card"><b class="blu">ICP:</b> regional MA plan with D-SNP that already works with HiLabs [reports six of top ten plans, unnamed].</div>
+ <div><b class="nv">Why MA first:</b> federal attempt rules, published Star weights, $13.4B+ bonus pool in 2026. <b class="nv">Medicaid next:</b> worse contact data but state-by-state rules.</div>
+ <div class="sub" style="margin-top:1px">Buyer map</div>
+ <div class="g" style="grid-template-columns:1fr 1fr;gap:6px">
+  <div class="by" style="background:var(--navy);color:#fff;border-color:var(--navy)"><b style="color:#fff">Sponsor</b>VP Care Management / CMO</div>
+  <div class="by"><b>Co-approval</b>CIO</div>
+  <div class="by"><b>Users</b>RN CMs, LCSW</div>
+  <div class="by" style="background:var(--rt);border-color:var(--rb)"><b style="color:var(--red)">Blocker</b>Compliance</div>
+ </div>
+ <div style="color:var(--mut);line-height:1.26"><i>Weak evidence from 2 press releases; validate with 3-5 interviews.</i></div>
+ <div class="sub" style="margin-top:1px">Market</div>
+ <div class="f grow" style="flex-direction:column;gap:6px">
+  <div class="card mk"><div class="num">35.2M</div><div>MA enrollees of 64.2M eligible, 2026 (55%) <span class="t t-m">Measured</span></div></div>
+  <div class="card mk"><div class="num">66M+</div><div>Medicaid MCO enrollees, Jul 2024 <span class="t t-m">Measured</span></div></div>
+  <div class="card mk"><div class="num">$13.4B+</div><div>quality bonus 2026, 2.3% of MA payments <span class="t t-m">Measured</span></div></div>
+  <div class="card mk"><div class="num">37%</div><div>of contracts at 4+ stars (188/508), 71% of enrollees <span class="t t-m">Measured</span></div></div>
+ </div>
+</div>
+<style>
+.by{background:var(--p1);border:1px solid var(--p3);border-radius:7px;padding:4px 9px;line-height:1.22}
+.by b{display:block;color:var(--blue);font-weight:800;font-size:13.5px}
+</style>
+<div class="col" style="left:476px;width:612px;gap:7px">
+ <div class="hd">Pilot timeline</div>
+ <div style="position:relative;height:166px" id="gantt">
+  <svg width="612" height="72" viewBox="0 0 612 50" preserveAspectRatio="none" style="position:absolute;left:0;top:0"><path d="M0 0H134L144 25 134 50H0z" fill="#4C5A75"/><path d="M144 0H278L288 25 278 50H144L154 25z" fill="#2B6CF0"/><path d="M288 0H422L432 25 422 50H288L298 25z" fill="#0A2A73"/><path d="M432 0H602L612 25 602 50H432L442 25z" fill="#2B6CF0"/></svg>
+  <div class="gl" style="left:8px;width:126px"><b>Baseline</b><br>Weeks -4 to 0</div>
+  <div class="gl" style="left:158px;width:122px"><b>Live vs control</b><br>Weeks 1-4</div>
+  <div class="gl" style="left:302px;width:122px"><b>Tune rules</b><br>Weeks 5-8</div>
+  <div class="gl" style="left:446px;width:158px"><b>Stepped: B goes live</b><br>Weeks 9-13</div>
+  <div class="gb" style="left:0;top:78px;width:142px;background:var(--gyt);color:var(--gry)">Logs + observation</div>
+  <div class="gb" style="left:144px;top:78px;width:468px;background:var(--blue);color:#fff">Cohort A live (15 CMs)</div>
+  <div class="gb" style="left:0;top:108px;width:142px;background:var(--gyt);color:var(--gry)">Plan lag triangles</div>
+  <div class="gb" style="left:144px;top:108px;width:286px;background:var(--p2);color:var(--navy);border:1px dashed var(--navy);line-height:24px">Cohort B control (15 CMs)</div>
+  <div class="gb" style="left:432px;top:108px;width:180px;background:var(--blue);color:#fff">Cohort B live</div>
+  <div class="gb" style="left:432px;top:138px;width:180px;background:var(--navy);color:#fff;padding-left:6px">Week 13: go/no-go readout</div>
+ </div>
+ <div class="card" style="padding:7px 11px"><b class="nv">Scope:</b> 30 case managers (range 20-50), one LOB (MA + D-SNP), read-only overlay + write-back of signed notes.</div>
+ <div class="dash" style="background:var(--p1)"><b class="nv">Why a control:</b> UCLA's control arm improved on its own; Camden's naive pre/post misled by <b class="rd">38 points.</b></div>
+ <div class="hd2" style="font-size:15px">Exit criteria, agreed up front</div>
+ <div class="f grow" style="flex-direction:column;gap:0">
+  <div class="grow" style="background:var(--gt);border:1.5px solid var(--gb);border-radius:8px;padding:9px 12px;display:flex;flex-direction:column;justify-content:center"><div style="font-size:16.5px;font-weight:800;color:var(--grn);margin-bottom:7px">Go if all three hold</div><div class="g" style="grid-template-columns:1.25fr 1fr 1fr;gap:10px"><div class="xc"><div class="num">+1.5</div><div>or more conversations per day vs control</div></div><div class="xc"><div class="num">90%</div><div>on-time contact</div></div><div class="xc"><div class="num">&lt;2%</div><div>major omission per audited draft</div></div></div></div>
+  <div class="chv" style="border-top-color:#8DB2F7"></div>
+  <div style="flex:.62;background:var(--rt);border:1.5px solid var(--rb);border-radius:8px;padding:9px 12px;display:flex;flex-direction:column;justify-content:center"><div style="font-size:16.5px;font-weight:800;color:var(--red);margin-bottom:5px">No-go fallback</div><div style="font-size:18px;line-height:1.3;font-weight:600">Sell compliance and audit layer, or data layer inside incumbents.</div><div style="font-size:15px;line-height:1.3;margin-top:6px"><b class="rd">Stop rule:</b> pause AI drafts at once if major omissions reach 5% of audited drafts.</div></div>
+ </div>
+ <div class="f" style="gap:7px;align-items:center"><b class="nv">Timing:</b><span class="ck" style="border-color:var(--blue);color:var(--blue)">1 Jan 2027: CMS-0057 APIs</span><span class="ck" style="border-color:var(--blue);color:var(--blue)">31 Jan 2027: TCPA revoke-all</span></div>
+</div>
+<style>
+.gl{position:absolute;top:6px;color:#fff;font-size:12.5px;line-height:1.2;font-weight:600}
+.gl b{font-size:14px;font-weight:800}
+.gb{position:absolute;height:24px;line-height:24px;font-size:12.5px;font-weight:700;padding-left:8px;border-radius:3px}
+.ex{gap:9px;align-items:center;margin-bottom:3px}
+.ex .num{font-size:20px;width:54px;flex:none}
+</style>
+<div class="col" style="left:1100px;width:476px;gap:7px">
+ <div class="hd">Pricing signal</div>
+ <div class="f" style="gap:7px">
+  <div class="card" style="flex:1;padding:6px 8px;text-align:center"><div class="num" style="font-size:25px">$500</div><div style="line-height:1.2">per seat per month</div></div>
+  <div class="card" style="flex:1;padding:6px 8px;text-align:center"><div class="num" style="font-size:25px">$45k</div><div style="line-height:1.2">pilot + data onboarding</div></div>
+  <div class="card" style="flex:1;padding:6px 8px;text-align:center"><div class="num" style="font-size:25px">$1.2M</div><div style="line-height:1.2">ARR at 200 CMs</div></div>
+ </div>
+ <div style="line-height:1.28">Per-case-manager seat, since no public PMPM exists. $500 sits inside Salesforce Health Cloud's $350-725 list range = $6k/yr, ~25% of $23-25k capacity value. Pilot: 30 seats x 3 months x $500. <span class="t t-e">Our proposal</span></div>
+ <div class="hd">Competition: incumbents own the record</div>
+ <div id="kl" style="background:#fff;border:1px solid var(--p3);border-radius:8px;padding:6px 10px">
+  <div class="kb"><span>Cognizant CareAdvance</span><div><i style="width:83.7%;background:var(--navy)"></i></div><b>83.7</b></div>
+  <div class="kb"><span>ZeOmega Jiva</span><div><i style="width:82.2%"></i></div><b>82.2</b></div>
+  <div class="kb"><span>VirtualHealth HELIOS</span><div><i style="width:80.4%"></i></div><b>80.4</b></div>
+  <div class="kb"><span>MHK CareProminence</span><div><i style="width:77.6%"></i></div><b>77.6</b></div>
+  <div class="kb"><span>GuidingCare</span><div><i style="width:76.3%"></i></div><b>76.3</b></div>
+  <div class="kb"><span>TruCare</span><div><i style="width:73.9%"></i></div><b>73.9</b></div>
+  <div style="font-size:12.5px;color:var(--mut);margin-top:2px;line-height:1.2">Cognizant: Best in KLAS 2026. Others: KLAS 2025.</div>
+ </div>
+ <div class="card"><b class="blu">Overlay = no rip-and-replace. Our wedge:</b> HiLabs' clinical data ingestion (MCheck Clinical) + published proof no competitor has: no verifiable payer CM time-saving result is public.</div>
+ <div class="card grow f" style="gap:12px;align-items:center"><div class="num" style="font-size:40px;flex:none">75%</div><div>of payer tech users want human review and audit trails before broad deployment (Black Book poll) <span class="t t-v">Vendor/poll</span></div></div>
+ <div class="dash" style="background:var(--at);border-color:var(--amb)"><b style="color:var(--amb)">Honest limits. Not found:</b> payer CM time-motion study, national connect benchmark, payer CM turnover, public PMPM, verified national HEDIS % rates. The pilot baseline gives this plan its own time and connect numbers; the rest stay open.</div>
+</div>
+<style>
+.kb{display:grid;grid-template-columns:158px 1fr 34px;gap:6px;align-items:center;font-size:12.5px;line-height:19px}
+.kb div{height:10px;background:var(--p1)}
+.kb i{display:block;height:10px;background:var(--blue)}
+.kb b{color:var(--navy);text-align:right}
+</style>
+<div class="src">Sources: 1. <a href="https://www.kff.org/medicare/medicare-advantage-in-2026-enrollment-update-and-key-trends/">KFF MA 2026</a> 2. <a href="https://www.kff.org/medicaid/10-things-to-know-about-medicaid-managed-care/">KFF Medicaid</a> 3. <a href="https://www.kff.org/medicare/medicare-advantage-quality-bonus-payments/">KFF bonus</a> 4. <a href="https://www.cms.gov/newsroom/fact-sheets/2027-medicare-advantage-part-d-star-ratings">CMS Stars 2027</a> 5. <a href="https://klasresearch.com/best-in-klas-ranking/care-management-solutions-payer/2025/306">KLAS 2025</a> 6. <a href="https://klasresearch.com/best-in-klas-ranking/care-management-solutions-payer/2026/306">KLAS 2026</a> 7. <a href="https://www.salesforce.com/healthcare-life-sciences/health-cloud/pricing/">Salesforce</a> 8. <a href="https://www.newswire.com/news/black-book-polls-find-health-plans-moving-from-digital-transformation-22789286">Black Book</a> 9. <a href="https://www.hilabs.com/our-solutions">HiLabs</a> 10. <a href="https://digital-release.wowktv.com/business/press-releases/cision/20260812PH24778/hilabs-named-to-the-inc-5000-list-for-the-second-consecutive-year">HiLabs release</a> 11. <a href="https://www.uclahealth.org/news/release/ucla-study-finds-ai-scribes-may-reduce-documentation-time">UCLA</a> 12. <a href="https://pubmed.ncbi.nlm.nih.gov/31914240/">Camden</a> 13. <a href="https://www.cms.gov/newsroom/fact-sheets/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f">CMS-0057</a> 14. <a href="https://docs.fcc.gov/public/attachments/DA-26-12A1.pdf">TCPA FCC</a></div>
+<div class="pg">12</div>
+</section>
+
+<script>
+function drawLinks(){
+ document.querySelectorAll('section[data-links]').forEach(function(sec){
+  var svg=sec.querySelector('svg.links'); if(!svg) return;
+  while(svg.firstChild) svg.removeChild(svg.firstChild);
+  var NS='http://www.w3.org/2000/svg', o=sec.getBoundingClientRect();
+  sec.dataset.links.split(';').forEach(function(s){
+   var m=s.trim().match(/^(\w+)>(\w+):(\w+)(?:@(\d+))?$/); if(!m) return;
+   var a=document.getElementById(m[1]), b=document.getElementById(m[2]); if(!a||!b) return;
+   var ra=a.getBoundingClientRect(), rb=b.getBoundingClientRect();
+   var ax=ra.left+ra.width/2-o.left, ay=ra.top+ra.height/2-o.top;
+   var bl=rb.left-o.left, br=rb.right-o.left, bt=rb.top-o.top, bb=rb.bottom-o.top;
+   var pts=[[ax,ay]], end;
+   if(m[3]==='h'){
+     var ex=(ax<bl)?bl:br;
+     if(ay>=bt+4&&ay<=bb-4){ end=[ex,ay]; }
+     else { var ty=(ay<bt)?bt+12:bb-12, mx=(ex<ax)?ex+11:ex-11; pts.push([mx,ay]); pts.push([mx,ty]); end=[ex,ty]; }
+   } else if(m[3]==='v'){
+     end=[ax,bt];
+   } else if(m[3]==='vhv'){
+     var y=+m[4], tx=Math.max(bl+20,Math.min(br-20,ax)); if(tx===ax){end=[ax,bt];} else {pts.push([ax,y]);pts.push([tx,y]);end=[tx,bt];}
+   }
+   pts.push(end);
+   var pl=document.createElementNS(NS,'polyline');
+   pl.setAttribute('points',pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' '));
+   svg.appendChild(pl);
+   var c=document.createElementNS(NS,'circle'); c.setAttribute('cx',end[0]);c.setAttribute('cy',end[1]);c.setAttribute('r',3); svg.appendChild(c);
+   // keep the numbered circle above the line
+  });
+ });
+}
+function stack(){document.querySelectorAll("section[data-links]").forEach(function(sec){var o=sec.getBoundingClientRect(),L=[],R=[];sec.dataset.links.split(";").forEach(function(x){var m=x.trim().match(/^(\w+)>(\w+):h/);if(!m)return;var a=document.getElementById(m[1]),b=document.getElementById(m[2]);var r=a.getBoundingClientRect();var it={b:b,y:r.top+r.height/2-o.top};((b.getBoundingClientRect().left-o.left<800)?L:R).push(it);});[L,R].forEach(function(g){g.sort(function(p,q){return p.y-q.y});var prev=+(sec.dataset.mintop||88);g.forEach(function(it){var h=it.b.getBoundingClientRect().height;var t=Math.max(prev,it.y-16);it.b.style.top=t+"px";prev=t+h+8;});});});}
+function raise(){ document.querySelectorAll('section[data-links] svg.links').forEach(function(s){ s.style.zIndex=5; }); document.querySelectorAll('.lap .n, section .scr .n').forEach(function(n){ n.style.zIndex=6; }); }
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){stack();drawLinks();raise();});} else {stack();drawLinks();raise();}
+</script>
+<style>
+.note{font-size:14.5px}
+.note .n{width:18px;height:18px;line-height:16px;font-size:11.5px;margin-top:0}
+.wrow{display:grid;grid-template-columns:170px 1fr 78px;align-items:center;line-height:23px}
+.tile2{flex:1;display:grid;grid-template-columns:172px 1fr;gap:10px;align-items:center;font-size:15px;line-height:1.3}
+.tile2 .num{font-size:39px}
+.s2{font-size:15px}
+.s2 .tx{font-size:15px;line-height:1.27;display:flex;align-items:center}
+.s2 .tb.big td{font-size:14.5px;padding:6px 8px}.s2 .tb th{font-size:14px}
+.s2 .sub{font-size:17px!important}
+.s2 .card{line-height:1.33}
+.s3{font-size:14.5px}
+.s3 .tb td{font-size:13.5px}
+.s3 .pain{font-size:14.5px}
+.s3 .navyb{flex:0 0 auto}
+.s4 #t4 td{font-size:14px;padding:6px 8px;line-height:1.27}.s4 #t4 th{font-size:14px}
+.s4 .tb td{font-size:13.5px}
+.s4{font-size:14.5px}
+.s5{font-size:14.5px}
+.s5 .ri,.s5 .ra{font-size:15.5px}.s5 .dc{font-size:13.5px;line-height:21px}
+.s5 .num{font-size:32px!important}
+.s5 .card .num[style*="21px"]{font-size:24px!important}
+.s6 #pg{grid-template-rows:auto auto 1fr auto auto repeat(5,23px)!important}
+.s6 .pi{font-size:15.5px;line-height:1.26}.s6 .pi li{margin-bottom:7px}.s6 ul.u li i{top:8px}
+.s6 .ps{font-size:14.5px}.s6 .p8{font-size:15px;line-height:1.3}
+.s6 .cv{line-height:23px;font-size:13.5px}.s6 .cd{line-height:21px}
+.s7{font-size:15px}
+.s7 .st{font-size:15px}.s7 .st b{font-size:16px}
+.s7 .lb{font-size:15.5px}.s7 .lh{font-size:15.5px}
+.s7 .fn{font-size:14.5px}.s7 .fn .big{font-size:23px}
+.s9 .scr{font-size:13px}
+.s9 .wt td{font-size:13.5px;padding:8px 8px}.s9 .wt th{font-size:12.5px;padding:6px 8px}
+.s9 .pt{font-size:14px}
+.s9 .dh{font-size:13.5px;margin-bottom:22px}
+.s9 .tln{font-size:13.5px}
+.s10 .scr{font-size:13px}
+.s10 .wt td{font-size:13px;padding:7px 7px}
+.s10 .pt{font-size:14px}
+.s10 .ln{font-size:14px;padding:11px 8px}
+.s10 .pnl{padding:8px 9px}
+.s11{font-size:15px}
+.s11 .tb td{font-size:14.5px;padding:6px 8px}.s11 .tb th{font-size:14px}
+.s11 .rkm{font-size:15px}.s11 .rkh{height:48px}
+.s12{font-size:14.5px}
+.s12 .num{font-size:33px}
+.s12 .card .num{font-size:33px!important}
+.s12 .ex .num{font-size:30px!important;width:82px}.s12 .ex{font-size:16px;margin-bottom:12px}
+.s12 .kb{font-size:13.5px;line-height:25px}.s12 .kb div,.s12 .kb i{height:12px}
+.s12 .gl{top:11px}
+.s2{font-size:15.5px}
+.s3{font-size:15px}.s3 .tb td{font-size:14px}.s3 .navyb{flex:none}
+.s4 #t4 td{padding:8.5px 8px}
+.s6 .pi{font-size:16px}.s6 .pi li{margin-bottom:10px}.s6 .p8{font-size:15.5px}.s6 .ps{font-size:15px}
+.s6 #pg{grid-template-rows:auto auto 1fr auto auto repeat(5,27px)!important}.s6 .cv{line-height:27px}.s6 .cd{line-height:25px}
+.s7 .st{font-size:16px}.s7 .st b{font-size:17px}
+.s7 .lb,.s7 .lh{font-size:16.5px}.s7 .fn{font-size:15.5px}.s7 .fn .big{font-size:26px}
+.s7 .fi{width:54px;height:54px}.s7 .fi .ic{width:30px!important;height:30px!important}
+.s9 .wt td{padding:9px 8px}.s9 .dh{margin-bottom:17px}
+.s10 .wt td{padding:5px 7px}.s10 .scr .pnl{padding:6px 9px}
+.s10 .ln{padding:15px 8px}
+.s11{font-size:15.5px}.s11 ul.u li i{top:8px}.s11 .rdl li i{background:var(--red)}
+.s12{font-size:15.5px}
+.mk{flex:1;display:grid;grid-template-columns:122px 1fr;gap:8px;align-items:center;padding:4px 10px;line-height:1.26}
+.s12 .mk .num{font-size:30px!important}
+.s12 .by{padding:6px 10px;font-size:15px}.s12 .by b{font-size:15px}
+.xc .num{font-size:32px}.xc{line-height:1.25;font-size:14.5px}
+.s12 .kb{line-height:28px}
+.s12 .gl{top:16px}.s12 .gl b{font-size:14.5px}.s12 .gl{font-size:13px}
+.s12 .gb{font-size:13px}
+.s7 .lad{grid-template-columns:192px 1fr}
+.s9 .wt td{padding:11px 8px}.s9 .dh{margin-bottom:21px}
+.s10 .ln{padding:17px 8px}
+.s11 .tb td{padding:8px 8px}.s11 .rkm{font-size:15.5px}
+.s12 .xc .num{font-size:44px}.s12 .xc{font-size:16px}
+.s12 .card{line-height:1.3}
+</style>
+</body>
+</html>

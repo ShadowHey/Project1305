@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareLens Prototype</title>
+<meta name="description" content="HiLabs CareLens case management workbench prototype: the earlier workflow vs CareLens for three synthetic members.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="topbar">
+  <button class="brand" id="brand" aria-label="Home"><span class="hi">Hi</span><span class="labs">Labs</span><span class="prod">CareLens</span></button>
+  <nav class="nav" id="nav" aria-label="Pages"></nav>
+  <div class="tools">
+    <span class="clock" id="clock" aria-live="polite"></span>
+    <button class="tbtn" id="filesBtn">Files</button>
+    <button class="tbtn" id="hintBtn" aria-pressed="true">Hints</button>
+    <button class="tbtn" id="resetBtn" title="Reset progress">Reset</button>
+    <div class="switch" role="group" aria-label="Workflow mode">
+      <button id="swE" aria-pressed="true">Earlier</button>
+      <button id="swC" aria-pressed="false">CareLens</button>
+    </div>
+  </div>
+</header>
+<div id="modebar" class="modebar e"></div>
+<main id="view"></main>
+
+<div id="scrim" class="scrim hide"></div>
+<aside id="drawer" class="drawer" aria-hidden="true" aria-labelledby="drTitle">
+  <div class="dh"><b id="drTitle">Files</b><button class="x" id="drClose" aria-label="Close files">×</button></div>
+  <div class="db" id="drBody"></div>
+</aside>
+<div id="modal" class="modal hide" role="dialog" aria-modal="true" aria-labelledby="mdTitle">
+  <div class="dh"><b id="mdTitle"></b><button class="x" id="mdClose" aria-label="Close file" style="background:none;border:0;color:#fff;font-size:22px">×</button></div>
+  <pre id="mdBody"></pre>
+</div>
+
+<div id="tourPop" class="tourpop hide" role="dialog" aria-live="polite" aria-label="Guided demo"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

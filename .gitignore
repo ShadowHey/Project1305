@@ -1,0 +1,10 @@
+# Allowlist: only code and notes are tracked
+/*
+!/.gitignore
+!/README.md
+!/prototype/
+!/build/
+!/reports/
+!/research_notes/
+/build/edgeprof/
+.DS_Store
